@@ -32,6 +32,16 @@ struct HomeView: View {
                 
                 // Mode selection cards
                 VStack(spacing: Theme.paddingMedium) {
+                    // Speed Test - first option
+                    NavigationLink(destination: SpeedTestView()) {
+                        ModeCard(
+                            icon: "stopwatch.fill",
+                            title: "Speed Test",
+                            description: "Test your comprehension at speed",
+                            color: .purple
+                        )
+                    }
+                    
                     NavigationLink(destination: TrainingModeView()) {
                         ModeCard(
                             icon: "graduationcap.fill",

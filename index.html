@@ -27,6 +27,15 @@
             </div>
 
             <div class="mode-cards">
+                <button class="mode-card" onclick="showSpeedTest()">
+                    <div class="mode-icon speedtest">⏱️</div>
+                    <div class="mode-info">
+                        <h3>Speed Test</h3>
+                        <p>Test your comprehension at speed</p>
+                    </div>
+                    <span class="chevron">›</span>
+                </button>
+
                 <button class="mode-card" onclick="showTrainingMode()">
                     <div class="mode-icon training">🎓</div>
                     <div class="mode-info">
@@ -154,6 +163,41 @@
             <h2>Complete!</h2>
             <p id="complete-stats"></p>
             <button class="done-btn" onclick="exitReader()">Done</button>
+        </div>
+    </div>
+
+    <!-- Speed Test Level Selection -->
+    <div id="speedtest-screen" class="screen">
+        <div class="screen-content">
+            <header class="screen-header">
+                <button class="back-btn" onclick="showHome()">‹</button>
+                <h2>Speed Test</h2>
+            </header>
+            <p class="subtitle">Test your reading comprehension at different speeds</p>
+            <div id="speedtest-list" class="training-list"></div>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz-screen" class="screen">
+        <div class="quiz-content">
+            <header class="quiz-header">
+                <span id="quiz-progress">Question 1 of 5</span>
+                <div class="quiz-dots" id="quiz-dots"></div>
+            </header>
+            <div class="quiz-question" id="quiz-question"></div>
+            <div class="quiz-options" id="quiz-options"></div>
+        </div>
+    </div>
+
+    <!-- Speed Test Result Screen -->
+    <div id="result-screen" class="screen">
+        <div class="result-content">
+            <div class="trophy" id="result-trophy"></div>
+            <h2 id="result-title"></h2>
+            <p id="result-subtitle"></p>
+            <div class="result-score" id="result-score"></div>
+            <div class="result-buttons" id="result-buttons"></div>
         </div>
     </div>
 

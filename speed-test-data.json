@@ -1,0 +1,297 @@
+[
+    {
+        "id": "test-1",
+        "level": 1,
+        "title": "The Coffee Bean",
+        "wpm": 200,
+        "text": "Coffee is one of the most popular beverages in the world. It originated in Ethiopia, where legend says a goat herder named Kaldi discovered it after noticing his goats became energetic after eating certain berries. The beans are actually seeds from the coffee cherry fruit. Today, Brazil is the world's largest coffee producer, followed by Vietnam and Colombia. Coffee contains caffeine, which stimulates the central nervous system and can improve focus and alertness. Most people drink coffee in the morning to help wake up, though some prefer it throughout the day. The two main types of coffee beans are Arabica and Robusta. Arabica beans are considered higher quality and have a smoother taste, while Robusta beans are stronger and contain more caffeine.",
+        "questions": [
+            {
+                "question": "Where did coffee originate?",
+                "options": [
+                    "Brazil",
+                    "Ethiopia",
+                    "Vietnam",
+                    "Colombia"
+                ],
+                "correctIndex": 1
+            },
+            {
+                "question": "Who discovered coffee according to legend?",
+                "options": [
+                    "A farmer",
+                    "A scientist",
+                    "A goat herder named Kaldi",
+                    "A merchant"
+                ],
+                "correctIndex": 2
+            },
+            {
+                "question": "What is the world's largest coffee producer?",
+                "options": [
+                    "Colombia",
+                    "Vietnam",
+                    "Ethiopia",
+                    "Brazil"
+                ],
+                "correctIndex": 3
+            },
+            {
+                "question": "What does caffeine stimulate?",
+                "options": [
+                    "The digestive system",
+                    "The central nervous system",
+                    "The immune system",
+                    "The respiratory system"
+                ],
+                "correctIndex": 1
+            },
+            {
+                "question": "Which coffee bean type is considered higher quality?",
+                "options": [
+                    "Robusta",
+                    "Liberica",
+                    "Arabica",
+                    "Excelsa"
+                ],
+                "correctIndex": 2
+            }
+        ]
+    },
+    {
+        "id": "test-2",
+        "level": 2,
+        "title": "The Human Brain",
+        "wpm": 300,
+        "text": "The human brain is the most complex organ in the body, weighing about three pounds and containing approximately 86 billion neurons. These neurons communicate through electrical and chemical signals, forming trillions of connections called synapses. The brain is divided into different regions, each responsible for specific functions. The frontal lobe handles decision-making, problem-solving, and personality. The temporal lobe processes hearing and language comprehension. The parietal lobe manages sensory information and spatial awareness. The occipital lobe is dedicated to visual processing. The brain consumes about 20 percent of the body's energy, despite being only 2 percent of body weight. Sleep is crucial for brain health, as it allows the brain to consolidate memories and remove waste products. Regular exercise, a healthy diet, and mental stimulation can help maintain cognitive function throughout life. The brain continues to form new neural connections even in adulthood, a process called neuroplasticity.",
+        "questions": [
+            {
+                "question": "How many neurons does the human brain contain?",
+                "options": [
+                    "10 million",
+                    "1 billion",
+                    "86 billion",
+                    "100 trillion"
+                ],
+                "correctIndex": 2
+            },
+            {
+                "question": "Which lobe handles decision-making?",
+                "options": [
+                    "Temporal lobe",
+                    "Frontal lobe",
+                    "Parietal lobe",
+                    "Occipital lobe"
+                ],
+                "correctIndex": 1
+            },
+            {
+                "question": "What percentage of body energy does the brain consume?",
+                "options": [
+                    "5 percent",
+                    "10 percent",
+                    "15 percent",
+                    "20 percent"
+                ],
+                "correctIndex": 3
+            },
+            {
+                "question": "Which lobe processes visual information?",
+                "options": [
+                    "Frontal lobe",
+                    "Temporal lobe",
+                    "Parietal lobe",
+                    "Occipital lobe"
+                ],
+                "correctIndex": 3
+            },
+            {
+                "question": "What is the process of forming new neural connections called?",
+                "options": [
+                    "Synaptogenesis",
+                    "Neuroplasticity",
+                    "Myelination",
+                    "Neurogenesis"
+                ],
+                "correctIndex": 1
+            }
+        ]
+    },
+    {
+        "id": "test-3",
+        "level": 3,
+        "title": "The Solar System",
+        "wpm": 400,
+        "text": "Our solar system formed approximately 4.6 billion years ago from a giant cloud of gas and dust called a nebula. At its center sits the Sun, a medium-sized star that contains 99.86 percent of the solar system's total mass. Eight planets orbit the Sun, divided into two categories: the inner rocky planets and the outer gas giants. Mercury, Venus, Earth, and Mars are the terrestrial planets, composed primarily of rock and metal. Jupiter, Saturn, Uranus, and Neptune are the gas giants, with Jupiter being the largest planet in our solar system. Beyond Neptune lies the Kuiper Belt, home to dwarf planets like Pluto and countless icy objects. The asteroid belt between Mars and Jupiter contains millions of rocky remnants from the solar system's formation. Each planet has unique characteristics: Mars has the largest volcano, Olympus Mons, while Saturn is famous for its spectacular ring system. Earth remains the only known planet to support life, thanks to its perfect distance from the Sun and presence of liquid water. Scientists continue to explore our cosmic neighborhood, searching for signs of past or present life on Mars and the moons of Jupiter and Saturn.",
+        "questions": [
+            {
+                "question": "How old is our solar system?",
+                "options": [
+                    "1 billion years",
+                    "2.5 billion years",
+                    "4.6 billion years",
+                    "10 billion years"
+                ],
+                "correctIndex": 2
+            },
+            {
+                "question": "What percentage of the solar system's mass is in the Sun?",
+                "options": [
+                    "75 percent",
+                    "85 percent",
+                    "95 percent",
+                    "99.86 percent"
+                ],
+                "correctIndex": 3
+            },
+            {
+                "question": "Which planet has the largest volcano?",
+                "options": [
+                    "Earth",
+                    "Venus",
+                    "Mars",
+                    "Jupiter"
+                ],
+                "correctIndex": 2
+            },
+            {
+                "question": "Where is the Kuiper Belt located?",
+                "options": [
+                    "Between Earth and Mars",
+                    "Between Mars and Jupiter",
+                    "Beyond Neptune",
+                    "Inside Mercury's orbit"
+                ],
+                "correctIndex": 2
+            },
+            {
+                "question": "How many planets orbit the Sun?",
+                "options": [
+                    "7",
+                    "8",
+                    "9",
+                    "10"
+                ],
+                "correctIndex": 1
+            }
+        ]
+    },
+    {
+        "id": "test-4",
+        "level": 4,
+        "title": "The Renaissance Period",
+        "wpm": 500,
+        "text": "The Renaissance, meaning 'rebirth' in French, was a transformative cultural movement that began in Italy during the 14th century and spread across Europe over the next three centuries. This period marked a transition from medieval times to modernity, characterized by renewed interest in classical Greek and Roman culture, art, philosophy, and science. Florence, Italy, served as the movement's birthplace, largely due to the patronage of wealthy families like the Medici. Artists such as Leonardo da Vinci, Michelangelo, and Raphael created masterpieces that revolutionized visual arts through techniques like perspective, chiaroscuro, and anatomical accuracy. Leonardo da Vinci, often considered the ultimate Renaissance man, excelled in painting, sculpture, architecture, science, and engineering. His Mona Lisa and The Last Supper remain among the world's most recognized artworks. Michelangelo's Sistine Chapel ceiling and his sculpture of David demonstrate the era's emphasis on human form and emotion. The Renaissance also transformed science and thought. Copernicus challenged the Earth-centered view of the universe, while Galileo advanced our understanding of physics and astronomy. The printing press, invented by Johannes Gutenberg around 1440, democratized knowledge by making books accessible beyond the wealthy elite. Humanism emerged as a dominant philosophy, emphasizing human potential, individualism, and secular concerns alongside religious beliefs. The Renaissance laid foundations for the Scientific Revolution and Enlightenment, ultimately shaping modern Western civilization.",
+        "questions": [
+            {
+                "question": "What does 'Renaissance' mean?",
+                "options": [
+                    "Revolution",
+                    "Rebirth",
+                    "Reform",
+                    "Recovery"
+                ],
+                "correctIndex": 1
+            },
+            {
+                "question": "Which city was the birthplace of the Renaissance?",
+                "options": [
+                    "Rome",
+                    "Venice",
+                    "Florence",
+                    "Milan"
+                ],
+                "correctIndex": 2
+            },
+            {
+                "question": "Which family was a major patron of Renaissance arts in Florence?",
+                "options": [
+                    "Borgia",
+                    "Medici",
+                    "Sforza",
+                    "Este"
+                ],
+                "correctIndex": 1
+            },
+            {
+                "question": "Who invented the printing press?",
+                "options": [
+                    "Leonardo da Vinci",
+                    "Galileo",
+                    "Johannes Gutenberg",
+                    "Copernicus"
+                ],
+                "correctIndex": 2
+            },
+            {
+                "question": "What philosophy emphasized human potential and individualism?",
+                "options": [
+                    "Scholasticism",
+                    "Humanism",
+                    "Rationalism",
+                    "Empiricism"
+                ],
+                "correctIndex": 1
+            }
+        ]
+    },
+    {
+        "id": "test-5",
+        "level": 5,
+        "title": "Quantum Physics",
+        "wpm": 600,
+        "text": "Quantum physics, also known as quantum mechanics, describes the behavior of matter and energy at the smallest scales, where classical physics breaks down. Developed in the early 20th century, it revolutionized our understanding of atoms, subatomic particles, and the fundamental nature of reality. Max Planck initiated the quantum revolution in 1900 when he proposed that energy is emitted in discrete packets called quanta, rather than continuously. Albert Einstein extended this idea, explaining the photoelectric effect by proposing that light itself consists of particles called photons. Werner Heisenberg formulated the uncertainty principle, which states that we cannot simultaneously know both the exact position and momentum of a particle. This isn't due to measurement limitations but reflects the fundamental nature of quantum systems. Erwin Schrödinger's famous thought experiment involving a cat illustrated the bizarre concept of superposition, where quantum objects exist in multiple states simultaneously until observed. Quantum entanglement, described by Einstein as 'spooky action at a distance,' occurs when particles become correlated so that measuring one instantly affects the other, regardless of the distance between them. These principles, while counterintuitive, have been repeatedly confirmed through experiments. Quantum mechanics underlies modern technologies including lasers, transistors, MRI machines, and the emerging field of quantum computing. Quantum computers utilize superposition and entanglement to perform calculations that would be impossible for classical computers. Scientists predict quantum technology will transform fields from cryptography to drug discovery, ushering in a new technological era.",
+        "questions": [
+            {
+                "question": "Who proposed that energy is emitted in discrete packets?",
+                "options": [
+                    "Einstein",
+                    "Max Planck",
+                    "Heisenberg",
+                    "Schrödinger"
+                ],
+                "correctIndex": 1
+            },
+            {
+                "question": "What did Einstein call quantum entanglement?",
+                "options": [
+                    "Strange correlation",
+                    "Spooky action at a distance",
+                    "Mysterious connection",
+                    "Quantum link"
+                ],
+                "correctIndex": 1
+            },
+            {
+                "question": "What does the uncertainty principle state?",
+                "options": [
+                    "Energy cannot be created or destroyed",
+                    "Light is both a wave and particle",
+                    "We cannot know exact position and momentum simultaneously",
+                    "Particles can tunnel through barriers"
+                ],
+                "correctIndex": 2
+            },
+            {
+                "question": "What concept does Schrödinger's cat illustrate?",
+                "options": [
+                    "Entanglement",
+                    "Uncertainty",
+                    "Superposition",
+                    "Wave-particle duality"
+                ],
+                "correctIndex": 2
+            },
+            {
+                "question": "What do quantum computers utilize to perform calculations?",
+                "options": [
+                    "Classical bits",
+                    "Transistors",
+                    "Superposition and entanglement",
+                    "Photons only"
+                ],
+                "correctIndex": 2
+            }
+        ]
+    }
+]

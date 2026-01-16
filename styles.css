@@ -666,3 +666,195 @@ body {
         min-width: 200px;
     }
 }
+
+/* Speed Test Mode Icon */
+.mode-icon.speedtest {
+    background: rgba(138, 43, 226, 0.15);
+}
+
+/* Quiz Styles */
+.quiz-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+    padding-top: max(40px, env(safe-area-inset-top));
+}
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.quiz-header span {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.quiz-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.quiz-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+}
+
+.quiz-dots .dot.answered {
+    background: var(--accent);
+}
+
+.quiz-question {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+}
+
+.quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--bg-surface);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.quiz-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.02);
+}
+
+.quiz-option .letter {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 24px;
+}
+
+.quiz-option .text {
+    font-size: 16px;
+    color: var(--text-primary);
+}
+
+/* Result Screen */
+.result-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.trophy {
+    font-size: 100px;
+    animation: trophyBounce 0.6s ease-out;
+}
+
+@keyframes trophyBounce {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.result-content h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 24px;
+    animation: fadeInUp 0.5s ease-out 0.3s both;
+}
+
+.result-content p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    animation: fadeInUp 0.5s ease-out 0.4s both;
+}
+
+.result-score {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--success);
+    margin-top: 16px;
+    animation: fadeInUp 0.5s ease-out 0.5s both;
+}
+
+.result-buttons {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 300px;
+    animation: fadeInUp 0.5s ease-out 0.6s both;
+}
+
+.result-btn {
+    padding: 16px 32px;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.result-btn.primary {
+    background: var(--accent);
+    color: white;
+}
+
+.result-btn.secondary {
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+.result-btn:hover {
+    transform: scale(1.05);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
