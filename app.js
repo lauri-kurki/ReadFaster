@@ -265,16 +265,16 @@ function stopPlayback() {
     }
 }
 
-function skipForward(e) {
+function skipForward(e, count = 3) {
     if (e) e.stopPropagation();
-    currentIndex = Math.min(currentIndex + 10, currentWords.length - 1);
+    currentIndex = Math.min(currentIndex + count, currentWords.length - 1);
     updateWordDisplay();
     updateProgress();
 }
 
-function skipBackward(e) {
+function skipBackward(e, count = 3) {
     if (e) e.stopPropagation();
-    currentIndex = Math.max(0, currentIndex - 10);
+    currentIndex = Math.max(0, currentIndex - count);
     updateWordDisplay();
     updateProgress();
 }

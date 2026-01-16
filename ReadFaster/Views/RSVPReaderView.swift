@@ -127,11 +127,11 @@ struct RSVPReaderView: View {
                     .padding(.horizontal, 20)
                     
                     // Buttons
-                    HStack(spacing: 40) {
-                        Button(action: { engine.skipBackward() }) {
-                            Image(systemName: "gobackward.10")
-                                .font(.system(size: 22))
-                                .foregroundColor(.white)
+                    HStack(spacing: 24) {
+                        // Backward buttons
+                        HStack(spacing: 16) {
+                            skipButton(count: 5, forward: false)
+                            skipButton(count: 3, forward: false)
                         }
                         
                         Button(action: { engine.togglePlayback() }) {
@@ -143,10 +143,10 @@ struct RSVPReaderView: View {
                                 .clipShape(Circle())
                         }
                         
-                        Button(action: { engine.skipForward() }) {
-                            Image(systemName: "goforward.10")
-                                .font(.system(size: 22))
-                                .foregroundColor(.white)
+                        // Forward buttons
+                        HStack(spacing: 16) {
+                            skipButton(count: 3, forward: true)
+                            skipButton(count: 5, forward: true)
                         }
                     }
                     
@@ -202,6 +202,36 @@ struct RSVPReaderView: View {
         }
         .onDisappear {
             engine.pause()
+        }
+    }
+    
+    // MARK: - Skip Button
+    
+    @ViewBuilder
+    private func skipButton(count: Int, forward: Bool) -> some View {
+        Button(action: {
+            if forward {
+                engine.skipForward(count)
+            } else {
+                engine.skipBackward(count)
+            }
+        }) {
+            HStack(spacing: 2) {
+                if !forward {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 12, weight: .bold))
+                }
+                Text("\(count)")
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                if forward {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .bold))
+                }
+            }
+            .foregroundColor(.white.opacity(0.8))
+            .frame(width: 44, height: 36)
+            .background(Color.white.opacity(0.1))
+            .cornerRadius(8)
         }
     }
 }

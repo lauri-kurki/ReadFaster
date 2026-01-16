@@ -524,17 +524,37 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 40px;
+    gap: 20px;
     margin-bottom: 16px;
 }
 
-.control-btn {
-    background: none;
+.skip-group {
+    display: flex;
+    gap: 8px;
+}
+
+.skip-btn {
+    background: rgba(255, 255, 255, 0.1);
     border: none;
-    color: var(--text-primary);
-    font-size: 18px;
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 10px 14px;
     cursor: pointer;
-    padding: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.skip-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.skip-btn:active {
+    transform: scale(0.95);
 }
 
 .play-btn {
