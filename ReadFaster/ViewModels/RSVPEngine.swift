@@ -99,6 +99,14 @@ class RSVPEngine: ObservableObject {
         isComplete = false
     }
     
+    func setSpeed(_ newWPM: Int) {
+        wordsPerMinute = newWPM
+        // Restart timer with new speed if currently playing
+        if isPlaying {
+            startTimer()
+        }
+    }
+    
     // MARK: - Private Methods
     
     private func startTimer() {

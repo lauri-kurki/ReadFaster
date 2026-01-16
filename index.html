@@ -65,7 +65,9 @@
         </header>
         
         <div class="free-content">
-            <p class="subtitle">Paste or type any text to speed read</p>
+            <div class="paste-row">
+                <button class="paste-btn" onclick="pasteFromClipboard()">📋 Paste</button>
+            </div>
             
             <textarea id="free-text" placeholder="Paste your text here..."></textarea>
             
@@ -94,7 +96,17 @@
         <header class="reader-header">
             <button class="close-btn" onclick="exitReader()">✕</button>
             <span id="reader-title"></span>
-            <span id="reader-wpm" class="wpm-badge"></span>
+            <select id="wpm-selector" class="wpm-selector" onchange="changeSpeed(this.value)">
+                <option value="100">100 WPM</option>
+                <option value="150">150 WPM</option>
+                <option value="200">200 WPM</option>
+                <option value="250">250 WPM</option>
+                <option value="300" selected>300 WPM</option>
+                <option value="400">400 WPM</option>
+                <option value="500">500 WPM</option>
+                <option value="600">600 WPM</option>
+                <option value="750">750 WPM</option>
+            </select>
         </header>
         
         <div class="reader-content" onclick="togglePlayback()">

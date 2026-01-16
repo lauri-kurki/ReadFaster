@@ -28,6 +28,27 @@ struct FreeReadingView: View {
                 
                 // Text input area
                 VStack(alignment: .leading, spacing: Theme.paddingSmall) {
+                    // Paste button row
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            if let clipboardText = UIPasteboard.general.string {
+                                inputText = clipboardText
+                            }
+                        }) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "doc.on.clipboard")
+                                Text("Paste")
+                            }
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(Theme.accent)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Theme.accent.opacity(0.15))
+                            .cornerRadius(8)
+                        }
+                    }
+                    
                     ZStack(alignment: .topLeading) {
                         if inputText.isEmpty {
                             Text("Paste your text here...")

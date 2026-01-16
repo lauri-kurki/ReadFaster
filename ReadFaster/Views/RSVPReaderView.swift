@@ -30,9 +30,28 @@ struct RSVPReaderView: View {
                     
                     Spacer()
                     
-                    Text("\(engine.wordsPerMinute) WPM")
-                        .font(.system(size: 14, weight: .bold, design: .monospaced))
+                    // Tappable WPM selector
+                    Menu {
+                        ForEach([100, 150, 200, 250, 300, 400, 500, 600, 750], id: \.self) { speed in
+                            Button("\(speed) WPM") {
+                                engine.setSpeed(speed)
+                            }
+                        }
+                    } label: {
+                        HStack(spacing: 4) {
+                            Text("\(engine.wordsPerMinute)")
+                                .font(.system(size: 16, weight: .bold, design: .monospaced))
+                            Text("WPM")
+                                .font(.system(size: 12, weight: .medium))
+                            Image(systemName: "chevron.down")
+                                .font(.system(size: 10, weight: .semibold))
+                        }
                         .foregroundColor(Color(hex: "FF6B6B"))
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 8)
+                        .background(Color(hex: "FF6B6B").opacity(0.15))
+                        .cornerRadius(8)
+                    }
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 16)

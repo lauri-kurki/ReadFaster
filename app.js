@@ -71,7 +71,7 @@ function renderTrainingList() {
         const isCompleted = completedLevels.has(t.id);
         const wordCount = t.content.split(/\s+/).length;
         const minutes = Math.ceil(wordCount / t.targetWPM);
-        
+
         return `
             <button class="training-card" onclick="startTraining(${t.id})">
                 <div class="level-badge ${isCompleted ? 'completed' : ''}">${isCompleted ? '✓' : t.level}</div>
@@ -92,12 +92,12 @@ function renderTrainingList() {
 function startTraining(id) {
     const text = trainingTexts.find(t => t.id === id);
     if (!text) return;
-    
+
     currentWords = parseText(text.content);
     currentWPM = text.targetWPM;
     currentIndex = 0;
     currentTitle = text.title;
-    
+
     startReader(text.id);
 }
 
@@ -112,7 +112,7 @@ freeText.addEventListener('input', () => {
     const words = freeText.value.trim().split(/\s+/).filter(w => w.length > 0);
     const count = words.length;
     wordCountEl.textContent = count > 0 ? `${count} words` : '';
-    
+
     if (count > 0) {
         startFreeBtn.classList.remove('disabled');
     } else {
@@ -127,43 +127,73 @@ wpmSlider.addEventListener('input', () => {
 function startFreeReading() {
     const text = freeText.value.trim();
     if (!text) return;
-    
+
     currentWords = parseText(text);
     currentWPM = parseInt(wpmSlider.value);
     currentIndex = 0;
     currentTitle = 'Free Reading';
-    
+
     startReader(null);
+}
+
+// Paste from clipboard
+async function pasteFromClipboard() {
+    try {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+            freeText.value = text;
+            freeText.dispatchEvent(new Event('input'));
+        }
+    } catch (e) {
+        console.error('Failed to paste:', e);
+        // Fallback - prompt user
+        alert('Please use Ctrl+V / Cmd+V to paste');
+    }
 }
 
 // Reader
 function startReader(trainingId) {
     document.getElementById('reader-title').textContent = currentTitle;
-    document.getElementById('reader-wpm').textContent = `${currentWPM} WPM`;
-    
+
+    // Set the WPM selector value
+    const wpmSelector = document.getElementById('wpm-selector');
+    wpmSelector.value = currentWPM;
+
     updateWordDisplay();
     updateProgress();
     showScreen('reader-screen');
-    
+
     // Store training ID for completion
     window.currentTrainingId = trainingId;
 }
 
+// Change speed on the fly
+function changeSpeed(newWPM) {
+    currentWPM = parseInt(newWPM);
+    updateProgress();
+
+    // Restart playback with new speed if playing
+    if (isPlaying) {
+        stopPlayback();
+        startPlayback();
+    }
+}
+
 function updateWordDisplay() {
     const display = document.getElementById('word-display');
-    
+
     if (currentIndex >= currentWords.length) {
         showComplete();
         return;
     }
-    
+
     const word = currentWords[currentIndex];
-    
+
     // Dynamic font size based on word length
     const len = word.text.length;
     let fontSize = 42;
     let sideWidth = 150;
-    
+
     if (len > 14) {
         fontSize = 24;
         sideWidth = 180;
@@ -173,9 +203,9 @@ function updateWordDisplay() {
     } else if (len > 7) {
         fontSize = 36;
     }
-    
+
     display.style.fontSize = `${fontSize}px`;
-    
+
     display.innerHTML = `
         <span class="before-orp" style="min-width:${sideWidth}px">${word.beforeORP}</span>
         <span class="orp">${word.orpCharacter}</span>
@@ -187,7 +217,7 @@ function updateProgress() {
     const progress = currentWords.length > 0 ? (currentIndex / currentWords.length) * 100 : 0;
     document.getElementById('progress-fill').style.width = `${progress}%`;
     document.getElementById('word-progress').textContent = `${currentIndex + 1}/${currentWords.length}`;
-    
+
     const remaining = Math.max(0, currentWords.length - currentIndex);
     const seconds = Math.ceil(remaining * (60 / currentWPM));
     const mins = Math.floor(seconds / 60);
@@ -197,7 +227,7 @@ function updateProgress() {
 
 function togglePlayback(e) {
     if (e) e.stopPropagation();
-    
+
     if (isPlaying) {
         stopPlayback();
     } else {
@@ -209,10 +239,10 @@ function startPlayback() {
     if (currentIndex >= currentWords.length - 1) {
         currentIndex = 0;
     }
-    
+
     isPlaying = true;
     document.getElementById('play-btn').textContent = '⏸';
-    
+
     const interval = 60000 / currentWPM;
     playbackInterval = setInterval(() => {
         currentIndex++;
@@ -257,16 +287,16 @@ function exitReader() {
 // Completion
 function showComplete() {
     stopPlayback();
-    
+
     // Mark as completed if training
     if (window.currentTrainingId) {
         completedLevels.add(window.currentTrainingId);
         localStorage.setItem('completedLevels', JSON.stringify([...completedLevels]));
     }
-    
-    document.getElementById('complete-stats').textContent = 
+
+    document.getElementById('complete-stats').textContent =
         `${currentWords.length} words at ${currentWPM} WPM`;
-    
+
     showScreen('complete-screen');
 }
 

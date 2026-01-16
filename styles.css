@@ -259,6 +259,26 @@ body {
     gap: 12px;
 }
 
+.paste-row {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.paste-btn {
+    background: rgba(255, 107, 107, 0.15);
+    border: none;
+    border-radius: 8px;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+.paste-btn:hover {
+    background: rgba(255, 107, 107, 0.25);
+}
+
 #free-text {
     flex: 1;
     background: var(--bg-surface);
@@ -382,6 +402,25 @@ body {
     font-weight: 700;
     font-family: monospace;
     color: var(--accent);
+}
+
+.wpm-selector {
+    background: rgba(255, 107, 107, 0.15);
+    border: none;
+    border-radius: 8px;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: monospace;
+    padding: 8px 12px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.wpm-selector option {
+    background: var(--bg-surface);
+    color: var(--text-primary);
 }
 
 .reader-content {
@@ -541,11 +580,11 @@ body {
         max-width: 500px;
         margin: 0 auto;
     }
-    
+
     .word-display {
         font-size: 52px;
     }
-    
+
     .word-display .before-orp,
     .word-display .after-orp {
         min-width: 200px;
