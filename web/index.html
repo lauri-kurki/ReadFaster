@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ReadFaster - Speed Reading Training</title>
+    <meta name="description" content="Train your speed reading skills with RSVP (Rapid Serial Visual Presentation)">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1A1A2E">
+    <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+    <!-- Home Screen -->
+    <div id="home-screen" class="screen active">
+        <div class="home-content">
+            <div class="logo">
+                <div class="logo-icon">R</div>
+                <h1>ReadFaster</h1>
+                <p class="tagline">Train your speed reading skills</p>
+            </div>
+            
+            <div class="mode-cards">
+                <button class="mode-card" onclick="showTrainingMode()">
+                    <div class="mode-icon training">🎓</div>
+                    <div class="mode-info">
+                        <h3>Training Mode</h3>
+                        <p>Progressive lessons to build your speed</p>
+                    </div>
+                    <span class="chevron">›</span>
+                </button>
+                
+                <button class="mode-card" onclick="showFreeReading()">
+                    <div class="mode-icon free">📖</div>
+                    <div class="mode-info">
+                        <h3>Free Reading</h3>
+                        <p>Read any text at your chosen speed</p>
+                    </div>
+                    <span class="chevron">›</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Training Mode Screen -->
+    <div id="training-screen" class="screen">
+        <header class="screen-header">
+            <button class="back-btn" onclick="showHome()">‹</button>
+            <h2>Training Mode</h2>
+        </header>
+        
+        <div class="training-content">
+            <p class="subtitle">Complete each level to improve your reading speed</p>
+            <div id="training-list" class="training-list">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Free Reading Screen -->
+    <div id="free-screen" class="screen">
+        <header class="screen-header">
+            <button class="back-btn" onclick="showHome()">‹</button>
+            <h2>Free Reading</h2>
+        </header>
+        
+        <div class="free-content">
+            <p class="subtitle">Paste or type any text to speed read</p>
+            
+            <textarea id="free-text" placeholder="Paste your text here..."></textarea>
+            
+            <div id="word-count" class="word-count"></div>
+            
+            <div class="wpm-control">
+                <div class="wpm-header">
+                    <span>Speed</span>
+                    <span class="wpm-value"><span id="wpm-display">300</span> WPM</span>
+                </div>
+                <input type="range" id="wpm-slider" min="100" max="800" value="300" step="25">
+                <div class="wpm-labels">
+                    <span>100</span>
+                    <span>800</span>
+                </div>
+            </div>
+            
+            <button id="start-free-btn" class="start-btn disabled" onclick="startFreeReading()">
+                ▶ Start Reading
+            </button>
+        </div>
+    </div>
+
+    <!-- Reader Screen -->
+    <div id="reader-screen" class="screen">
+        <header class="reader-header">
+            <button class="close-btn" onclick="exitReader()">✕</button>
+            <span id="reader-title"></span>
+            <span id="reader-wpm" class="wpm-badge"></span>
+        </header>
+        
+        <div class="reader-content" onclick="togglePlayback()">
+            <div class="guide-line top"></div>
+            <div id="word-display" class="word-display">
+                <span class="tap-hint">Tap to start</span>
+            </div>
+            <div class="guide-line bottom"></div>
+        </div>
+        
+        <div class="reader-controls">
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+            
+            <div class="control-buttons">
+                <button class="control-btn" onclick="skipBackward(event)">⟲10</button>
+                <button id="play-btn" class="play-btn" onclick="togglePlayback(event)">▶</button>
+                <button class="control-btn" onclick="skipForward(event)">10⟳</button>
+            </div>
+            
+            <div class="reader-stats">
+                <span id="word-progress">0/0</span>
+                <span id="time-remaining">0:00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completion Screen -->
+    <div id="complete-screen" class="screen">
+        <div class="complete-content">
+            <div class="complete-icon">✓</div>
+            <h2>Complete!</h2>
+            <p id="complete-stats"></p>
+            <button class="done-btn" onclick="exitReader()">Done</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
