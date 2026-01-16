@@ -111,8 +111,21 @@ class RSVPEngine: ObservableObject {
     
     private func startTimer() {
         stopTimer()
-        timer = Timer.scheduledTimer(withTimeInterval: wordInterval, repeats: true) { [weak self] _ in
+        scheduleNextWord()
+    }
+    
+    private func scheduleNextWord() {
+        // Calculate interval - add extra pause for period-ending words
+        var interval = wordInterval
+        if let word = currentWord, word.endsWithPeriod {
+            interval *= 1.5 // 50% longer pause for sentences
+        }
+        
+        timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { [weak self] _ in
             self?.advanceWord()
+            if self?.isPlaying == true && self?.isComplete == false {
+                self?.scheduleNextWord()
+            }
         }
     }
     

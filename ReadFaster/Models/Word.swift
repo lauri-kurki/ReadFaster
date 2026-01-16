@@ -6,10 +6,22 @@ struct Word: Identifiable {
     let id = UUID()
     let text: String
     
+    /// Cleaned text with special characters removed (except period)
+    var cleanText: String {
+        // Remove all punctuation except period
+        let allowedCharacters = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: "."))
+        return text.unicodeScalars.filter { allowedCharacters.contains($0) }.map { String($0) }.joined()
+    }
+    
+    /// Whether this word ends with a period (for pause)
+    var endsWithPeriod: Bool {
+        return cleanText.hasSuffix(".")
+    }
+    
     /// The index of the ORP character (0-based)
     /// Calculated based on word length - typically around 35% into the word
     var orpIndex: Int {
-        let length = text.count
+        let length = cleanText.count
         guard length > 0 else { return 0 }
         
         // ORP calculation based on research:
@@ -35,22 +47,22 @@ struct Word: Identifiable {
     /// The portion of the word before the ORP character
     var beforeORP: String {
         guard orpIndex > 0 else { return "" }
-        let index = text.index(text.startIndex, offsetBy: orpIndex)
-        return String(text[..<index])
+        let index = cleanText.index(cleanText.startIndex, offsetBy: orpIndex)
+        return String(cleanText[..<index])
     }
     
     /// The ORP character itself (highlighted)
     var orpCharacter: String {
-        guard text.count > orpIndex else { return "" }
-        let index = text.index(text.startIndex, offsetBy: orpIndex)
-        return String(text[index])
+        guard cleanText.count > orpIndex else { return "" }
+        let index = cleanText.index(cleanText.startIndex, offsetBy: orpIndex)
+        return String(cleanText[index])
     }
     
     /// The portion of the word after the ORP character
     var afterORP: String {
-        guard orpIndex < text.count - 1 else { return "" }
-        let index = text.index(text.startIndex, offsetBy: orpIndex + 1)
-        return String(text[index...])
+        guard orpIndex < cleanText.count - 1 else { return "" }
+        let index = cleanText.index(cleanText.startIndex, offsetBy: orpIndex + 1)
+        return String(cleanText[index...])
     }
 }
 

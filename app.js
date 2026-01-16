@@ -19,18 +19,29 @@ function calculateORP(word) {
     return 4;
 }
 
+// Clean text - remove special characters except period
+function cleanWord(text) {
+    return text.replace(/[^\w.]/g, '');
+}
+
 function parseWord(text) {
-    const orpIndex = calculateORP(text);
+    const cleanText = cleanWord(text);
+    const orpIndex = calculateORP(cleanText);
     return {
         text: text,
-        beforeORP: text.substring(0, orpIndex),
-        orpCharacter: text.charAt(orpIndex),
-        afterORP: text.substring(orpIndex + 1)
+        cleanText: cleanText,
+        beforeORP: cleanText.substring(0, orpIndex),
+        orpCharacter: cleanText.charAt(orpIndex),
+        afterORP: cleanText.substring(orpIndex + 1),
+        endsWithPeriod: cleanText.endsWith('.')
     };
 }
 
 function parseText(text) {
-    return text.split(/\s+/).filter(w => w.length > 0).map(parseWord);
+    return text.split(/\s+/)
+        .filter(w => w.length > 0)
+        .map(parseWord)
+        .filter(w => w.cleanText.length > 0); // Remove empty words after cleaning
 }
 
 // Screen Navigation
@@ -243,8 +254,20 @@ function startPlayback() {
     isPlaying = true;
     document.getElementById('play-btn').textContent = '⏸';
 
-    const interval = 60000 / currentWPM;
-    playbackInterval = setInterval(() => {
+    scheduleNextWord();
+}
+
+function scheduleNextWord() {
+    if (!isPlaying) return;
+
+    // Calculate interval - add extra pause for period-ending words
+    let interval = 60000 / currentWPM;
+    const word = currentWords[currentIndex];
+    if (word && word.endsWithPeriod) {
+        interval *= 1.5; // 50% longer pause for sentences
+    }
+
+    playbackInterval = setTimeout(() => {
         currentIndex++;
         if (currentIndex >= currentWords.length) {
             stopPlayback();
@@ -252,6 +275,7 @@ function startPlayback() {
         } else {
             updateWordDisplay();
             updateProgress();
+            scheduleNextWord();
         }
     }, interval);
 }
@@ -260,7 +284,7 @@ function stopPlayback() {
     isPlaying = false;
     document.getElementById('play-btn').textContent = '▶';
     if (playbackInterval) {
-        clearInterval(playbackInterval);
+        clearTimeout(playbackInterval);
         playbackInterval = null;
     }
 }
