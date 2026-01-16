@@ -4,8 +4,8 @@
     "description": "Speed reading training with RSVP",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#1A1A2E",
-    "theme_color": "#1A1A2E",
+    "background_color": "#1A1B2E",
+    "theme_color": "#1A1B2E",
     "icons": [
         {
             "src": "icon-192.png",
