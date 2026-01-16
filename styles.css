@@ -574,11 +574,23 @@ body {
     border: none;
     border-radius: 50%;
     color: var(--text-primary);
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: -apple-system, sans-serif;
+}
+
+.play-btn.playing {
+    gap: 4px;
+}
+
+.play-btn .pause-bar {
+    width: 4px;
+    height: 18px;
+    background: var(--text-primary);
+    border-radius: 2px;
 }
 
 .reader-stats {

@@ -156,9 +156,14 @@ async function pasteFromClipboard() {
             freeText.dispatchEvent(new Event('input'));
         }
     } catch (e) {
-        console.error('Failed to paste:', e);
-        // Fallback - prompt user
-        alert('Please use Ctrl+V / Cmd+V to paste');
+        // Fallback for mobile - focus textarea and let user paste manually
+        freeText.focus();
+        freeText.select();
+        // Show a subtle hint
+        freeText.placeholder = 'Long-press to paste your text...';
+        setTimeout(() => {
+            freeText.placeholder = 'Paste your text here...';
+        }, 3000);
     }
 }
 
@@ -252,7 +257,7 @@ function startPlayback() {
     }
 
     isPlaying = true;
-    document.getElementById('play-btn').textContent = '⏸';
+    updatePlayButton();
 
     scheduleNextWord();
 }
@@ -280,9 +285,20 @@ function scheduleNextWord() {
     }, interval);
 }
 
+function updatePlayButton() {
+    const btn = document.getElementById('play-btn');
+    if (isPlaying) {
+        btn.innerHTML = '<span class="pause-bar"></span><span class="pause-bar"></span>';
+        btn.classList.add('playing');
+    } else {
+        btn.innerHTML = '▶';
+        btn.classList.remove('playing');
+    }
+}
+
 function stopPlayback() {
     isPlaying = false;
-    document.getElementById('play-btn').textContent = '▶';
+    updatePlayButton();
     if (playbackInterval) {
         clearTimeout(playbackInterval);
         playbackInterval = null;
