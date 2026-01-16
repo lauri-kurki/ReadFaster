@@ -12,16 +12,12 @@ struct HomeView: View {
                 
                 // Logo and title
                 VStack(spacing: Theme.paddingMedium) {
-                    // App icon
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(Theme.accent.opacity(0.15))
-                            .frame(width: 80, height: 80)
-                        
-                        Text("R")
-                            .font(.system(size: 40, weight: .bold, design: .monospaced))
-                            .foregroundColor(Theme.accent)
-                    }
+                    // App icon - use new logo image
+                    Image("Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
                     
                     Text("ReadFaster")
                         .font(.system(size: 36, weight: .bold, design: .rounded))
