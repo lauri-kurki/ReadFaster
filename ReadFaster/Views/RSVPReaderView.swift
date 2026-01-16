@@ -58,52 +58,50 @@ struct RSVPReaderView: View {
                 
                 Spacer()
                 
-                // Word display - ORP centered under guide
+                // Word display - ORP centered under guide (fixed height container)
                 VStack(spacing: 0) {
                     // Top guide line
                     Rectangle()
                         .fill(Color.white.opacity(0.3))
-                        .frame(width: 2, height: 35)
+                        .frame(width: 2, height: 30)
                     
-                    // Word with ORP highlighted
-                    if engine.words.isEmpty {
-                        Text("Tap to start")
-                            .font(.system(size: 20))
-                            .foregroundColor(.white.opacity(0.5))
-                            .frame(height: 70)
-                    } else if let word = engine.currentWord {
-                        // Dynamic font size based on word length
-                        let wordLength = word.text.count
-                        let fontSize: CGFloat = wordLength > 14 ? 24 : (wordLength > 10 ? 30 : (wordLength > 7 ? 36 : 42))
-                        // Dynamic width based on font size
-                        let sideWidth: CGFloat = wordLength > 10 ? 180 : 150
-                        
-                        // ORP-centered display with monospace for exact alignment
-                        HStack(spacing: 0) {
-                            // Before ORP - fixed width, right aligned
-                            Text(word.beforeORP)
-                                .foregroundColor(.white)
-                                .frame(width: sideWidth, alignment: .trailing)
+                    // Word display area - fixed height
+                    ZStack {
+                        if engine.words.isEmpty {
+                            Text("Tap to start")
+                                .font(.system(size: 20))
+                                .foregroundColor(.white.opacity(0.5))
+                        } else if let word = engine.currentWord {
+                            // Dynamic font size based on word length
+                            let wordLength = word.text.count
+                            let fontSize: CGFloat = wordLength > 14 ? 24 : (wordLength > 10 ? 30 : (wordLength > 7 ? 36 : 42))
+                            let sideWidth: CGFloat = wordLength > 10 ? 180 : 150
                             
-                            // ORP character - red, at exact center
-                            Text(word.orpCharacter)
-                                .foregroundColor(Color(hex: "FF6B6B"))
-                            
-                            // After ORP - fixed width, left aligned
-                            Text(word.afterORP)
-                                .foregroundColor(.white)
-                                .frame(width: sideWidth, alignment: .leading)
+                            // ORP-centered display
+                            HStack(spacing: 0) {
+                                Text(word.beforeORP)
+                                    .foregroundColor(.white)
+                                    .frame(width: sideWidth, alignment: .trailing)
+                                
+                                Text(word.orpCharacter)
+                                    .foregroundColor(Color(hex: "FF6B6B"))
+                                
+                                Text(word.afterORP)
+                                    .foregroundColor(.white)
+                                    .frame(width: sideWidth, alignment: .leading)
+                            }
+                            .font(.system(size: fontSize, weight: .medium, design: .monospaced))
+                            .lineLimit(1)
                         }
-                        .font(.system(size: fontSize, weight: .medium, design: .monospaced))
-                        .lineLimit(1)
-                        .frame(height: 70)
                     }
+                    .frame(height: 60)
                     
                     // Bottom guide line
                     Rectangle()
                         .fill(Color.white.opacity(0.3))
-                        .frame(width: 2, height: 35)
+                        .frame(width: 2, height: 30)
                 }
+                .frame(height: 120) // Fixed total height
                 .contentShape(Rectangle())
                 .onTapGesture {
                     engine.togglePlayback()
