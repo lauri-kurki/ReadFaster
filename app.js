@@ -171,9 +171,14 @@ async function pasteFromClipboard() {
 function startReader(trainingId) {
     document.getElementById('reader-title').textContent = currentTitle;
 
-    // Set the WPM selector value
+    // Set the WPM selector value - find closest available value
     const wpmSelector = document.getElementById('wpm-selector');
-    wpmSelector.value = currentWPM;
+    const availableValues = Array.from(wpmSelector.options).map(o => parseInt(o.value));
+    const closest = availableValues.reduce((prev, curr) =>
+        Math.abs(curr - currentWPM) < Math.abs(prev - currentWPM) ? curr : prev
+    );
+    wpmSelector.value = closest;
+    currentWPM = closest; // Update to use the actual value
 
     updateWordDisplay();
     updateProgress();
