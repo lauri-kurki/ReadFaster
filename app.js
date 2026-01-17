@@ -207,21 +207,35 @@ const wpmDisplay = document.getElementById('wpm-display');
 const wordCountEl = document.getElementById('word-count');
 const startFreeBtn = document.getElementById('start-free-btn');
 
-freeText.addEventListener('input', () => {
+function updateWordCount() {
+    if (!freeText || !wordCountEl) return;
     const words = freeText.value.trim().split(/\s+/).filter(w => w.length > 0);
     const count = words.length;
     wordCountEl.textContent = count > 0 ? `${count} words` : '';
+}
 
-    if (count > 0) {
+function updateStartButton() {
+    if (!freeText || !startFreeBtn) return;
+    const words = freeText.value.trim().split(/\s+/).filter(w => w.length > 0);
+    if (words.length > 0) {
         startFreeBtn.classList.remove('disabled');
     } else {
         startFreeBtn.classList.add('disabled');
     }
-});
+}
 
-wpmSlider.addEventListener('input', () => {
-    wpmDisplay.textContent = wpmSlider.value;
-});
+if (freeText) {
+    freeText.addEventListener('input', () => {
+        updateWordCount();
+        updateStartButton();
+    });
+}
+
+if (wpmSlider && wpmDisplay) {
+    wpmSlider.addEventListener('input', () => {
+        wpmDisplay.textContent = wpmSlider.value;
+    });
+}
 
 function startFreeReading() {
     const text = freeText.value.trim();
