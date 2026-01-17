@@ -206,7 +206,11 @@ struct DocumentPicker: UIViewControllerRepresentable {
     let onPick: (URL) -> Void
     
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
-        let types: [UTType] = [.pdf, UTType(filenameExtension: "docx")!]
+        let types: [UTType] = [
+            .pdf,
+            UTType(filenameExtension: "docx")!,
+            UTType(filenameExtension: "epub")!
+        ]
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: types)
         picker.delegate = context.coordinator
         picker.allowsMultipleSelection = false

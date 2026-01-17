@@ -95,6 +95,10 @@ async function handleFileUpload(event) {
             });
         } else if (ext === 'docx') {
             text = await extractTextFromDOCX(file);
+        } else if (ext === 'epub') {
+            text = await extractTextFromEPUB(file, (progress) => {
+                freeText.value = (lang.ui.loading || 'Loading...') + '\n\n' + progress;
+            });
         } else {
             // Try reading as plain text
             text = await file.text();
@@ -159,6 +163,99 @@ async function extractTextFromDOCX(file) {
     const arrayBuffer = await file.arrayBuffer();
     const result = await mammoth.extractRawText({ arrayBuffer });
     return result.value;
+}
+
+async function extractTextFromEPUB(file, onProgress) {
+    if (typeof JSZip === 'undefined') {
+        throw new Error('JSZip library not loaded');
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const zip = await JSZip.loadAsync(arrayBuffer);
+
+    // Find content.opf to get the reading order
+    let opfPath = '';
+    let opfContent = '';
+
+    // Look for container.xml to find the OPF file
+    const containerFile = zip.file('META-INF/container.xml');
+    if (containerFile) {
+        const containerXml = await containerFile.async('text');
+        const rootfileMatch = containerXml.match(/full-path="([^"]+\.opf)"/i);
+        if (rootfileMatch) {
+            opfPath = rootfileMatch[1];
+        }
+    }
+
+    // Fallback: find any .opf file
+    if (!opfPath) {
+        for (const filename of Object.keys(zip.files)) {
+            if (filename.endsWith('.opf')) {
+                opfPath = filename;
+                break;
+            }
+        }
+    }
+
+    if (!opfPath) {
+        throw new Error('Could not find EPUB content file');
+    }
+
+    const opfFile = zip.file(opfPath);
+    if (opfFile) {
+        opfContent = await opfFile.async('text');
+    }
+
+    // Extract spine items (reading order) from OPF
+    const basePath = opfPath.substring(0, opfPath.lastIndexOf('/') + 1);
+    const itemRefs = [];
+    const idToHref = {};
+
+    // Parse manifest items
+    const manifestMatches = opfContent.matchAll(/<item[^>]+id="([^"]+)"[^>]+href="([^"]+)"[^>]*>/gi);
+    for (const match of manifestMatches) {
+        idToHref[match[1]] = match[2];
+    }
+
+    // Parse spine itemrefs
+    const spineMatches = opfContent.matchAll(/<itemref[^>]+idref="([^"]+)"[^>]*>/gi);
+    for (const match of spineMatches) {
+        const href = idToHref[match[1]];
+        if (href && (href.endsWith('.html') || href.endsWith('.xhtml') || href.endsWith('.htm'))) {
+            itemRefs.push(basePath + href);
+        }
+    }
+
+    // If no spine found, just get all HTML files
+    if (itemRefs.length === 0) {
+        for (const filename of Object.keys(zip.files)) {
+            if (filename.endsWith('.html') || filename.endsWith('.xhtml') || filename.endsWith('.htm')) {
+                itemRefs.push(filename);
+            }
+        }
+    }
+
+    // Extract text from each chapter
+    let fullText = '';
+    for (let i = 0; i < itemRefs.length; i++) {
+        if (onProgress) {
+            onProgress(`Chapter ${i + 1} of ${itemRefs.length}...`);
+        }
+
+        const htmlFile = zip.file(itemRefs[i]);
+        if (htmlFile) {
+            const html = await htmlFile.async('text');
+            // Parse HTML and extract text
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            // Remove scripts and styles
+            doc.querySelectorAll('script, style').forEach(el => el.remove());
+            const text = doc.body ? doc.body.textContent : '';
+            fullText += text.trim() + '\n\n';
+        }
+    }
+
+    return fullText.trim();
 }
 
 // Training List is loaded via loadTrainingTexts() at end of file

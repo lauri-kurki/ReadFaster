@@ -18,6 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <!-- Mammoth.js for reading DOCX -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <!-- JSZip for reading EPUB -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 
 <body>
@@ -90,7 +92,7 @@
 
         <div class="free-content">
             <!-- Hidden file input -->
-            <input type="file" id="file-input" accept=".pdf,.docx" style="display: none;"
+            <input type="file" id="file-input" accept=".pdf,.docx,.epub" style="display: none;"
                 onchange="handleFileUpload(event)">
 
             <div class="paste-row">
