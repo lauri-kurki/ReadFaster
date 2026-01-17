@@ -57,6 +57,24 @@
         .policy-content a {
             color: var(--accent);
         }
+
+        /* Email obfuscation */
+        .email-obfuscate {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+        }
+
+        .email-obfuscate::before {
+            content: attr(data-domain);
+        }
+
+        .email-obfuscate::after {
+            content: attr(data-user);
+        }
+
+        .email-hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -123,8 +141,9 @@
             <li><strong>Correction:</strong> You can ask us to update or fix inaccurate information.</li>
             <li><strong>Deletion:</strong> You can request that we delete your personal data at any time.</li>
         </ul>
-        <p>To exercise these rights, please contact us at <a
-                href="mailto:privacy@readfaster.app">privacy@readfaster.app</a>.</p>
+        <p>To exercise these rights, please contact us at <span class="email-text">info<span
+                    class="email-hidden">REMOVETHIS</span>&#64;readfaster<span
+                    class="email-hidden">SPAM</span>&#46;app</span>.</p>
 
         <h2>6. Children's Privacy</h2>
         <p>Our App does not address anyone under the age of 13. We do not knowingly collect personally identifiable
@@ -138,7 +157,8 @@
         <h2>8. Contact Us</h2>
         <p>If you have any questions about this Privacy Policy, please contact us:</p>
         <ul>
-            <li>By email: <a href="mailto:privacy@readfaster.app">privacy@readfaster.app</a></li>
+            <li>By email: <span class="email-text">info<span class="email-hidden">REMOVETHIS</span>&#64;readfaster<span
+                        class="email-hidden">SPAM</span>&#46;app</span></li>
             <li>Website: <a href="https://www.readfaster.app/">https://www.readfaster.app/</a></li>
         </ul>
     </div>
