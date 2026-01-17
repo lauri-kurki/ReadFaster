@@ -276,8 +276,8 @@ body {
 .paste-row {
     display: flex;
     justify-content: flex-end;
-    gap: 12px;
-    margin-bottom: 8px;
+    gap: 20px;
+    margin-bottom: 12px;
 }
 
 .paste-btn {
