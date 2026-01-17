@@ -3,241 +3,146 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ReadFaster - Speed Reading Training</title>
-    <meta name="description" content="Train your speed reading skills with RSVP (Rapid Serial Visual Presentation)">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReadFaster - Read 3x Faster Today</title>
+    <meta name="description"
+        content="Read and learn at rocket speed. Access your library seamlessly across our mobile app and web platform.">
     <link rel="icon" type="image/png" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#1A1B2E">
-    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- PDF.js for reading PDFs -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <!-- Mammoth.js for reading DOCX -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="landing.css">
 </head>
 
 <body>
-    <!-- Home Screen -->
-    <div id="home-screen" class="screen active">
-        <div class="home-content">
-            <!-- Settings button -->
-            <div class="settings-btn-container">
-                <button class="settings-btn" onclick="showSettings()">⚙️</button>
-            </div>
-
-            <div class="logo">
-                <img src="icon-192.png" alt="ReadFaster" class="logo-image">
-                <h1 id="home-title">ReadFaster</h1>
-                <p class="tagline" id="home-tagline">Train your speed reading skills</p>
-            </div>
-
-            <div class="mode-cards">
-                <button class="mode-card" onclick="showSpeedTest()">
-                    <div class="mode-icon speedtest">⏱️</div>
-                    <div class="mode-info">
-                        <h3>Speed Test</h3>
-                        <p>Test your comprehension at speed</p>
-                    </div>
-                    <span class="chevron">›</span>
-                </button>
-
-                <button class="mode-card" onclick="showTrainingMode()">
-                    <div class="mode-icon training">🎓</div>
-                    <div class="mode-info">
-                        <h3>Training Mode</h3>
-                        <p>Progressive lessons to build your speed</p>
-                    </div>
-                    <span class="chevron">›</span>
-                </button>
-
-                <button class="mode-card" onclick="showFreeReading()">
-                    <div class="mode-icon free">📖</div>
-                    <div class="mode-info">
-                        <h3>Free Reading</h3>
-                        <p>Read any text at your chosen speed</p>
-                    </div>
-                    <span class="chevron">›</span>
-                </button>
-            </div>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">📖</span>
+            <span class="logo-text">ReadFaster</span>
         </div>
-    </div>
+        <a href="/app/" class="btn-open">Open App</a>
+    </header>
 
-    <!-- Training Mode Screen -->
-    <div id="training-screen" class="screen">
-        <header class="screen-header">
-            <button class="back-btn" onclick="showHome()">‹</button>
-            <h2>Training Mode</h2>
-        </header>
+    <!-- Hero Section -->
+    <section class="hero">
+        <p class="hero-badge">🚀 SPEED READING APP AVAILABLE</p>
+        <h1 class="hero-title">Read <span class="accent">3x Faster</span> Today.</h1>
+        <p class="hero-subtitle">Read and learn at rocket speed. Access your library seamlessly across our mobile app
+            and web platform.</p>
+        <a href="#get-started" class="btn-primary">Get Started</a>
+        <p class="hero-rating">⭐⭐⭐⭐⭐ Rated 4.9 - 2.3K+ Reviews</p>
 
-        <div class="training-content">
-            <p class="subtitle" id="training-subtitle">Complete each level to improve your reading speed</p>
-            <div id="training-list" class="training-list">
-                <!-- Populated by JS -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Free Reading Screen -->
-    <div id="free-screen" class="screen">
-        <header class="screen-header">
-            <button class="back-btn" onclick="showHome()">‹</button>
-            <h2 id="free-title">Free Reading</h2>
-        </header>
-
-        <div class="free-content">
-            <!-- Hidden file input -->
-            <input type="file" id="file-input" accept=".pdf,.docx" style="display: none;"
-                onchange="handleFileUpload(event)">
-
-            <div class="paste-row">
-                <button class="paste-btn" onclick="pasteFromClipboard()" id="paste-btn">Paste</button>
-                <button class="paste-btn" onclick="document.getElementById('file-input').click()"
-                    id="upload-btn">Upload</button>
-            </div>
-
-            <textarea id="free-text" placeholder="Paste your text here..."></textarea>
-
-            <div id="word-count" class="word-count"></div>
-
-            <div class="wpm-control">
-                <div class="wpm-header">
-                    <span id="speed-label">Speed</span>
-                    <span class="wpm-value"><span id="wpm-display">300</span> WPM</span>
+        <!-- Phone Mockup -->
+        <div class="phone-mockup">
+            <div class="phone-screen">
+                <p class="phone-label">CURRENTLY READING</p>
+                <h2 class="phone-word">Knowledge</h2>
+                <div class="phone-controls">
+                    <button class="control-btn">⏪</button>
+                    <button class="control-btn play">▶</button>
+                    <button class="control-btn">⏩</button>
                 </div>
-                <input type="range" id="wpm-slider" min="100" max="800" value="300" step="25">
-                <div class="wpm-labels">
-                    <span>100</span>
-                    <span>800</span>
+                <p class="phone-wpm">350 WPM</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why ReadFaster -->
+    <section class="features">
+        <h2 class="section-title">Why ReadFaster?</h2>
+        <p class="section-subtitle">Designed to help you consume content efficiently without losing comprehension.</p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>RSVP Engine</h3>
+                <p>Rapid Serial Visual Presentation technology flashes words at optimal speeds to eliminate eye movement
+                    latency.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎛️</div>
+                <h3>Customizable WPM</h3>
+                <p>Set your own pace. Adjust anytime from 150 to 1000 WPM as you improve.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Progress Tracking</h3>
+                <p>Visual alerts showing your reading speed improvements and words read over time.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Distraction-Free</h3>
+                <p>A clean, minimalist interface for an immersive reading experience. Focus purely on the text.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Upload, Choose & Test</h3>
+                    <p>Import content, choose a lesson or Speed Reading Course, or take a Speed Reading Test.</p>
                 </div>
             </div>
 
-            <button id="start-free-btn" class="start-btn disabled" onclick="startFreeReading()">
-                ▶ <span id="start-reading-text">Start Reading</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- Reader Screen -->
-    <div id="reader-screen" class="screen">
-        <header class="reader-header">
-            <button class="close-btn" onclick="exitReader()">✕</button>
-            <span id="reader-title"></span>
-            <select id="wpm-selector" class="wpm-selector" onchange="changeSpeed(this.value)">
-                <option value="100">⚡ 100 WPM</option>
-                <option value="150">⚡ 150 WPM</option>
-                <option value="200">⚡ 200 WPM</option>
-                <option value="250">⚡ 250 WPM</option>
-                <option value="300" selected>⚡ 300 WPM</option>
-                <option value="400">⚡ 400 WPM</option>
-                <option value="500">⚡ 500 WPM</option>
-                <option value="600">⚡ 600 WPM</option>
-                <option value="750">⚡ 750 WPM</option>
-            </select>
-        </header>
-
-        <div class="reader-content" onclick="togglePlayback()">
-            <div class="guide-line top"></div>
-            <div id="word-display" class="word-display">
-                <span class="tap-hint">Tap to start</span>
-            </div>
-            <div class="guide-line bottom"></div>
-        </div>
-
-        <div class="reader-controls">
-            <div class="progress-bar">
-                <div id="progress-fill" class="progress-fill"></div>
-            </div>
-
-            <div class="control-buttons">
-                <div class="skip-group">
-                    <button class="skip-btn" onclick="skipBackward(event, 5)">‹ 5</button>
-                    <button class="skip-btn" onclick="skipBackward(event, 3)">‹ 3</button>
-                </div>
-                <button id="play-btn" class="play-btn" onclick="togglePlayback(event)">▶</button>
-                <div class="skip-group">
-                    <button class="skip-btn" onclick="skipForward(event, 3)">3 ›</button>
-                    <button class="skip-btn" onclick="skipForward(event, 5)">5 ›</button>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Set Your Speed</h3>
+                    <p>Choose your comfortable Words Per Minute (WPM) and start slow.</p>
                 </div>
             </div>
 
-            <div class="reader-stats">
-                <span id="word-progress">0/0</span>
-                <span id="time-remaining">0:00</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Completion Screen -->
-    <div id="complete-screen" class="screen">
-        <div class="complete-content">
-            <div class="complete-icon">✓</div>
-            <h2>Complete!</h2>
-            <p id="complete-stats"></p>
-            <button class="done-btn" onclick="exitReader()">Done</button>
-        </div>
-    </div>
-
-    <!-- Speed Test Level Selection -->
-    <div id="speedtest-screen" class="screen">
-        <div class="screen-content">
-            <header class="screen-header">
-                <button class="back-btn" onclick="showHome()">‹</button>
-                <h2>Speed Test</h2>
-            </header>
-            <p class="subtitle">Test your reading comprehension at different speeds</p>
-            <div id="speedtest-list" class="training-list"></div>
-        </div>
-    </div>
-
-    <!-- Quiz Screen -->
-    <div id="quiz-screen" class="screen">
-        <div class="quiz-content">
-            <header class="quiz-header">
-                <span id="quiz-progress">Question 1 of 5</span>
-                <div class="quiz-dots" id="quiz-dots"></div>
-            </header>
-            <div class="quiz-question" id="quiz-question"></div>
-            <div class="quiz-options" id="quiz-options"></div>
-        </div>
-    </div>
-
-    <!-- Speed Test Result Screen -->
-    <div id="result-screen" class="screen">
-        <div class="result-content">
-            <div class="trophy" id="result-trophy"></div>
-            <h2 id="result-title"></h2>
-            <p id="result-subtitle"></p>
-            <div class="result-score" id="result-score"></div>
-            <div class="result-buttons" id="result-buttons"></div>
-        </div>
-    </div>
-
-    <!-- Settings Screen -->
-    <div id="settings-screen" class="screen">
-        <div class="screen-content">
-            <header class="screen-header">
-                <button class="back-btn" onclick="showHome()">‹</button>
-                <h2 id="settings-title">Settings</h2>
-            </header>
-            <div class="settings-list">
-                <div class="settings-section">
-                    <p class="settings-label" id="settings-lang-label">Language</p>
-                    <div class="settings-options">
-                        <button class="lang-option" id="lang-en" onclick="setLanguage('en')">English</button>
-                        <button class="lang-option" id="lang-de" onclick="setLanguage('de')">Deutsch</button>
-                    </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Read Instantly</h3>
+                    <p>Start the engine and absorb knowledge faster than ever before.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <script src="lang-en.js"></script>
-    <script src="lang-de.js"></script>
-    <script src="app.js"></script>
+    <!-- CTA Section -->
+    <section class="cta" id="get-started">
+        <h2>Ready to double your reading speed?</h2>
+        <a href="/app/" class="btn-primary">Get Started</a>
+        <p class="cta-note">Available on iOS, Web, Mac.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <span class="logo-icon">📖</span>
+            <span class="logo-text">ReadFaster</span>
+        </div>
+
+        <div class="footer-links">
+            <div class="footer-col">
+                <h4>PRODUCT</h4>
+                <a href="/app/">Web App</a>
+                <a href="#">Download iOS</a>
+            </div>
+            <div class="footer-col">
+                <h4>SUPPORT</h4>
+                <a href="#">FAQ</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <a href="/app/" class="btn-primary btn-footer">Get Started →</a>
+        </div>
+    </footer>
 </body>
 
 </html>
