@@ -50,6 +50,22 @@ body {
     font-weight: 700;
 }
 
+.header-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+}
+
+/* ORP highlight for phone mockup */
+.phone-word .orp {
+    color: var(--accent);
+}
+
+.phone-word .before-orp,
+.phone-word .after-orp {
+    color: var(--text-primary);
+}
+
 .btn-open {
     background: var(--accent);
     color: white;
