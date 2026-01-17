@@ -211,28 +211,38 @@ async function extractTextFromEPUB(file, onProgress) {
     const itemRefs = [];
     const idToHref = {};
 
-    // Parse manifest items
-    const manifestMatches = opfContent.matchAll(/<item[^>]+id="([^"]+)"[^>]+href="([^"]+)"[^>]*>/gi);
-    for (const match of manifestMatches) {
-        idToHref[match[1]] = match[2];
+    // Parse manifest items - handle both id/href order variations
+    const manifestRegex = /<item[^>]*\sid=["']([^"']+)["'][^>]*\shref=["']([^"']+)["'][^>]*>/gi;
+    const manifestRegex2 = /<item[^>]*\shref=["']([^"']+)["'][^>]*\sid=["']([^"']+)["'][^>]*>/gi;
+
+    let match;
+    while ((match = manifestRegex.exec(opfContent)) !== null) {
+        idToHref[match[1]] = decodeURIComponent(match[2]);
+    }
+    while ((match = manifestRegex2.exec(opfContent)) !== null) {
+        idToHref[match[2]] = decodeURIComponent(match[1]);
     }
 
     // Parse spine itemrefs
-    const spineMatches = opfContent.matchAll(/<itemref[^>]+idref="([^"]+)"[^>]*>/gi);
-    for (const match of spineMatches) {
+    const spineRegex = /<itemref[^>]*\sidref=["']([^"']+)["'][^>]*>/gi;
+    while ((match = spineRegex.exec(opfContent)) !== null) {
         const href = idToHref[match[1]];
         if (href && (href.endsWith('.html') || href.endsWith('.xhtml') || href.endsWith('.htm'))) {
-            itemRefs.push(basePath + href);
+            // Handle relative paths
+            let fullPath = href.startsWith('/') ? href.substring(1) : basePath + href;
+            itemRefs.push(fullPath);
         }
     }
 
     // If no spine found, just get all HTML files
     if (itemRefs.length === 0) {
         for (const filename of Object.keys(zip.files)) {
-            if (filename.endsWith('.html') || filename.endsWith('.xhtml') || filename.endsWith('.htm')) {
+            if ((filename.endsWith('.html') || filename.endsWith('.xhtml') || filename.endsWith('.htm'))
+                && !filename.includes('nav') && !filename.includes('toc')) {
                 itemRefs.push(filename);
             }
         }
+        itemRefs.sort();
     }
 
     // Extract text from each chapter
@@ -242,20 +252,45 @@ async function extractTextFromEPUB(file, onProgress) {
             onProgress(`Chapter ${i + 1} of ${itemRefs.length}...`);
         }
 
-        const htmlFile = zip.file(itemRefs[i]);
+        // Try to find the file (handle path variations)
+        let htmlFile = zip.file(itemRefs[i]);
+        if (!htmlFile) {
+            // Try without base path
+            const filename = itemRefs[i].split('/').pop();
+            for (const key of Object.keys(zip.files)) {
+                if (key.endsWith(filename)) {
+                    htmlFile = zip.file(key);
+                    break;
+                }
+            }
+        }
+
         if (htmlFile) {
-            const html = await htmlFile.async('text');
-            // Parse HTML and extract text
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            // Remove scripts and styles
-            doc.querySelectorAll('script, style').forEach(el => el.remove());
-            const text = doc.body ? doc.body.textContent : '';
-            fullText += text.trim() + '\n\n';
+            try {
+                const html = await htmlFile.async('text');
+                // Parse HTML and extract text
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                // Remove scripts and styles
+                doc.querySelectorAll('script, style, nav, head').forEach(el => el.remove());
+                let text = doc.body ? doc.body.textContent : '';
+
+                // Clean up the text
+                text = text
+                    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '') // Remove control characters
+                    .replace(/\s+/g, ' ')  // Collapse whitespace
+                    .trim();
+
+                if (text.length > 50) { // Only add if meaningful content
+                    fullText += text + '\n\n';
+                }
+            } catch (e) {
+                console.warn('Error parsing chapter:', e);
+            }
         }
     }
 
-    return fullText.trim();
+    return fullText.trim() || 'Could not extract text from this EPUB file.';
 }
 
 // Training List is loaded via loadTrainingTexts() at end of file
