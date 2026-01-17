@@ -276,27 +276,27 @@ body {
 .paste-row {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 4px;
+    gap: 12px;
+    margin-bottom: 8px;
 }
 
 .paste-btn {
-    background: var(--bg-surface);
-    border: 1px solid rgba(255, 107, 107, 0.3);
-    border-radius: 10px;
+    background: transparent;
+    border: 2px solid var(--accent);
+    border-radius: 25px;
     color: var(--accent);
     font-size: 14px;
     font-weight: 600;
-    padding: 10px 16px;
+    padding: 10px 24px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
     transition: all 0.2s ease;
+    min-width: 100px;
+    text-align: center;
 }
 
 .paste-btn:hover {
-    background: rgba(255, 107, 107, 0.1);
-    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--bg-primary);
     transform: scale(1.02);
 }
 

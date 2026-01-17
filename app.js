@@ -690,8 +690,8 @@ function applyTranslations() {
     const freeText = document.getElementById('free-text');
 
     if (freeTitle) freeTitle.textContent = ui.freeReading;
-    if (pasteBtn) pasteBtn.innerHTML = '📋 ' + ui.paste;
-    if (uploadBtn) uploadBtn.innerHTML = '📄 ' + ui.upload;
+    if (pasteBtn) pasteBtn.textContent = ui.paste;
+    if (uploadBtn) uploadBtn.textContent = ui.upload;
     if (speedLabel) speedLabel.textContent = ui.speed || 'Speed';
     if (startReadingText) startReadingText.textContent = ui.startReading;
     if (freeText) freeText.placeholder = ui.placeholder;
