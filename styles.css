@@ -934,3 +934,168 @@ body {
     color: var(--accent);
     font-weight: bold;
 }
+
+/* ===========================================
+   RESPONSIVE DESIGN - TABLET (768px+)
+   =========================================== */
+@media (min-width: 768px) {
+    .screen {
+        padding: 32px;
+    }
+
+    /* Home Screen - Larger spacing */
+    .home-content {
+        gap: 40px;
+    }
+
+    .app-title {
+        font-size: 48px;
+    }
+
+    .tagline {
+        font-size: 18px;
+    }
+
+    /* Mode cards grid */
+    .mode-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        max-width: 700px;
+    }
+
+    .mode-card {
+        padding: 24px 20px;
+    }
+
+    .mode-card h3 {
+        font-size: 18px;
+    }
+
+    /* Training/Speed Test - 2 column grid */
+    .training-list,
+    .speedtest-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    /* Reader - Larger word display */
+    .word-display {
+        font-size: 56px;
+    }
+
+    /* Free Reading - Better spacing */
+    .free-content {
+        max-width: 600px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .paste-row {
+        justify-content: center;
+    }
+}
+
+/* ===========================================
+   RESPONSIVE DESIGN - DESKTOP (1024px+)
+   =========================================== */
+@media (min-width: 1024px) {
+    .screen {
+        padding: 40px 60px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Home Screen */
+    .home-content {
+        gap: 50px;
+    }
+
+    .app-logo {
+        width: 100px;
+        height: 100px;
+        font-size: 48px;
+    }
+
+    .app-title {
+        font-size: 56px;
+    }
+
+    .tagline {
+        font-size: 20px;
+    }
+
+    .mode-cards {
+        max-width: 900px;
+        gap: 24px;
+    }
+
+    .mode-card {
+        padding: 32px 24px;
+    }
+
+    .mode-card h3 {
+        font-size: 20px;
+    }
+
+    .mode-card p {
+        font-size: 14px;
+    }
+
+    /* Reader - Much larger on desktop */
+    .reader-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .word-display {
+        font-size: 72px;
+        padding: 80px 40px;
+    }
+
+    .wpm-badge {
+        font-size: 20px;
+        padding: 10px 24px;
+    }
+
+    /* Training/Speed Test lists */
+    .training-list,
+    .speedtest-list {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    /* Free Reading */
+    .free-content {
+        max-width: 700px;
+    }
+
+    #free-text {
+        font-size: 18px;
+        padding: 24px;
+    }
+
+    .paste-btn {
+        font-size: 16px;
+        padding: 12px 32px;
+    }
+
+    /* Quiz - Better layout */
+    .quiz-container {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .quiz-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    /* Settings */
+    .settings-content {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}

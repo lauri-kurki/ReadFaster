@@ -720,3 +720,52 @@ function loadTrainingTexts() {
 function loadSpeedTestData() {
     speedTestLevels = lang.speedTest;
 }
+
+// Keyboard shortcuts for desktop
+document.addEventListener('keydown', (e) => {
+    // Only work when reader is active
+    const readerScreen = document.getElementById('reader-screen');
+    if (!readerScreen || !readerScreen.classList.contains('active')) return;
+
+    // Ignore if typing in an input
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+    switch (e.code) {
+        case 'Space':
+            e.preventDefault();
+            togglePlayback();
+            break;
+        case 'ArrowLeft':
+            e.preventDefault();
+            adjustSpeed(-50);
+            break;
+        case 'ArrowRight':
+            e.preventDefault();
+            adjustSpeed(50);
+            break;
+        case 'Escape':
+            e.preventDefault();
+            showHome();
+            break;
+        case 'KeyR':
+            e.preventDefault();
+            restartReading();
+            break;
+    }
+});
+
+function adjustSpeed(delta) {
+    currentWPM = Math.max(100, Math.min(800, currentWPM + delta));
+    document.getElementById('current-wpm').textContent = currentWPM;
+
+    // Restart playback with new speed if playing
+    if (isPlaying) {
+        stopPlayback();
+        startPlayback();
+    }
+}
+
+function restartReading() {
+    currentIndex = 0;
+    updateWordDisplay();
+}
