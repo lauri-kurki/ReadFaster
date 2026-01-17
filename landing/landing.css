@@ -1,0 +1,506 @@
+/* Landing Page Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #0D0D0D;
+    --bg-surface: #1A1A1A;
+    --bg-card: #1F1F1F;
+    --text-primary: #FFFFFF;
+    --text-secondary: #9CA3AF;
+    --accent: #FF6B6B;
+    --accent-dark: #E85555;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    position: sticky;
+    top: 0;
+    background: var(--bg-primary);
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-icon {
+    font-size: 24px;
+}
+
+.logo-text {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.btn-open {
+    background: var(--accent);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-open:hover {
+    background: var(--accent-dark);
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 40px 20px 60px;
+}
+
+.hero-badge {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+
+.hero-title {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.hero-title .accent {
+    color: var(--accent);
+}
+
+.hero-subtitle {
+    color: var(--text-secondary);
+    font-size: 16px;
+    max-width: 320px;
+    margin: 0 auto 24px;
+}
+
+.btn-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: var(--accent-dark);
+    transform: translateY(-2px);
+}
+
+.hero-rating {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-top: 16px;
+}
+
+/* Phone Mockup */
+.phone-mockup {
+    margin-top: 40px;
+    padding: 0 20px;
+}
+
+.phone-screen {
+    background: linear-gradient(180deg, #1A1A2E 0%, #0D0D1A 100%);
+    border-radius: 32px;
+    padding: 40px 24px;
+    max-width: 300px;
+    margin: 0 auto;
+    border: 3px solid #333;
+}
+
+.phone-label {
+    color: var(--text-secondary);
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+
+.phone-word {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 32px;
+}
+
+.phone-controls {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.control-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--bg-surface);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.control-btn.play {
+    width: 64px;
+    height: 64px;
+    background: var(--accent);
+    font-size: 20px;
+}
+
+.phone-wpm {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Features Section */
+.features {
+    padding: 60px 20px;
+}
+
+.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.section-subtitle {
+    color: var(--text-secondary);
+    text-align: center;
+    font-size: 15px;
+    max-width: 300px;
+    margin: 0 auto 40px;
+}
+
+.features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.feature-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.feature-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.feature-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* How It Works */
+.how-it-works {
+    padding: 60px 20px;
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.step-content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.step-content p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* CTA Section */
+.cta {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--bg-surface);
+    border-radius: 24px;
+    margin: 40px 20px;
+}
+
+.cta h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.cta-note {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-top: 16px;
+}
+
+/* Footer */
+.footer {
+    padding: 40px 20px;
+    border-top: 1px solid #2A2A2A;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 60px;
+    margin-bottom: 32px;
+}
+
+.footer-col h4 {
+    color: var(--text-secondary);
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+
+.footer-col a {
+    display: block;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.footer-col a:hover {
+    color: var(--accent);
+}
+
+.btn-footer {
+    width: 100%;
+    text-align: center;
+}
+
+/* ===========================================
+   RESPONSIVE - TABLET (768px+)
+   =========================================== */
+@media (min-width: 768px) {
+    .header {
+        padding: 20px 40px;
+    }
+
+    .hero {
+        padding: 60px 40px 80px;
+    }
+
+    .hero-title {
+        font-size: 48px;
+    }
+
+    .hero-subtitle {
+        font-size: 18px;
+        max-width: 500px;
+    }
+
+    .phone-screen {
+        max-width: 350px;
+        padding: 50px 32px;
+    }
+
+    .phone-word {
+        font-size: 40px;
+    }
+
+    .features,
+    .how-it-works {
+        padding: 80px 40px;
+    }
+
+    .section-title {
+        font-size: 36px;
+    }
+
+    .section-subtitle {
+        max-width: 500px;
+        font-size: 16px;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .cta {
+        margin: 60px 40px;
+        padding: 80px 40px;
+    }
+
+    .cta h2 {
+        font-size: 32px;
+    }
+
+    .footer {
+        padding: 60px 40px;
+    }
+
+    .footer-links {
+        gap: 100px;
+    }
+
+    .btn-footer {
+        width: auto;
+    }
+}
+
+/* ===========================================
+   RESPONSIVE - DESKTOP (1024px+)
+   =========================================== */
+@media (min-width: 1024px) {
+    .header {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px 60px;
+    }
+
+    .hero {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 60px 100px;
+    }
+
+    .hero-title {
+        font-size: 56px;
+    }
+
+    .hero-subtitle {
+        font-size: 20px;
+        max-width: 600px;
+    }
+
+    .phone-screen {
+        max-width: 400px;
+    }
+
+    .phone-word {
+        font-size: 48px;
+    }
+
+    .features,
+    .how-it-works {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 60px;
+    }
+
+    .section-title {
+        font-size: 42px;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+    }
+
+    .steps {
+        flex-direction: row;
+        justify-content: center;
+        gap: 60px;
+    }
+
+    .step {
+        flex-direction: column;
+        text-align: center;
+        max-width: 280px;
+    }
+
+    .step-number {
+        margin: 0 auto 16px;
+    }
+
+    .cta {
+        max-width: 1000px;
+        margin: 80px auto;
+        padding: 100px 60px;
+    }
+
+    .cta h2 {
+        font-size: 40px;
+    }
+
+    .footer {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .footer-logo {
+        margin-bottom: 0;
+    }
+
+    .footer-links {
+        margin-bottom: 0;
+    }
+
+    .footer-bottom {
+        display: flex;
+        align-items: center;
+    }
+}
