@@ -27,6 +27,8 @@ const lang_de = {
         freeReadingTitle: "Freies Lesen",
         placeholder: "Füge deinen Text hier ein...",
         paste: "Einfügen",
+        upload: "Hochladen",
+        loading: "Dokument wird geladen...",
         startReading: "Lesen starten",
         speed: "Geschwindigkeit",
 

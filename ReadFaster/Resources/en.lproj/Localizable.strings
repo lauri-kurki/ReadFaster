@@ -29,6 +29,8 @@
 "freereading.subtitle" = "Paste or type any text to speed read";
 "freereading.placeholder" = "Paste your text here...";
 "freereading.paste" = "Paste";
+"freereading.upload" = "Upload";
+"freereading.loading" = "Loading document...";
 "freereading.start" = "Start Reading";
 "freereading.speed" = "Speed";
 "freereading.words" = "%d words";

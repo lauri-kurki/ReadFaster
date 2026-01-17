@@ -1,10 +1,13 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 /// Free reading mode where users can input their own text
 struct FreeReadingView: View {
     @State private var inputText: String = ""
     @State private var wpm: Double = 300
     @State private var showReader = false
+    @State private var showDocumentPicker = false
+    @State private var isLoading = false
     @FocusState private var isTextFieldFocused: Bool
     
     var body: some View {
@@ -28,9 +31,11 @@ struct FreeReadingView: View {
                 
                 // Text input area
                 VStack(alignment: .leading, spacing: Theme.paddingSmall) {
-                    // Paste button row
-                    HStack {
+                    // Button row - Paste and Upload
+                    HStack(spacing: 8) {
                         Spacer()
+                        
+                        // Paste button
                         Button(action: {
                             if let clipboardText = UIPasteboard.general.string {
                                 inputText = clipboardText
@@ -47,10 +52,26 @@ struct FreeReadingView: View {
                             .background(Theme.accent.opacity(0.15))
                             .cornerRadius(8)
                         }
+                        
+                        // Upload button
+                        Button(action: {
+                            showDocumentPicker = true
+                        }) {
+                            HStack(spacing: 6) {
+                                Image(systemName: "doc.badge.arrow.up")
+                                Text(NSLocalizedString("freereading.upload", comment: ""))
+                            }
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundColor(Theme.accent)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .background(Theme.accent.opacity(0.15))
+                            .cornerRadius(8)
+                        }
                     }
                     
                     ZStack(alignment: .topLeading) {
-                        if inputText.isEmpty {
+                        if inputText.isEmpty && !isLoading {
                             Text(NSLocalizedString("freereading.placeholder", comment: ""))
                                 .font(Theme.bodyFont)
                                 .foregroundColor(Theme.textSecondary.opacity(0.6))
@@ -58,11 +79,22 @@ struct FreeReadingView: View {
                                 .padding(.vertical, 8)
                         }
                         
-                        TextEditor(text: $inputText)
-                            .font(Theme.bodyFont)
-                            .foregroundColor(Theme.textPrimary)
-                            .scrollContentBackground(.hidden)
-                            .focused($isTextFieldFocused)
+                        if isLoading {
+                            VStack {
+                                ProgressView()
+                                    .tint(Theme.accent)
+                                Text(NSLocalizedString("freereading.loading", comment: ""))
+                                    .font(Theme.bodyFont)
+                                    .foregroundColor(Theme.textSecondary)
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        } else {
+                            TextEditor(text: $inputText)
+                                .font(Theme.bodyFont)
+                                .foregroundColor(Theme.textPrimary)
+                                .scrollContentBackground(.hidden)
+                                .focused($isTextFieldFocused)
+                        }
                     }
                     .padding(Theme.paddingMedium)
                     .background(Theme.surface)
@@ -147,6 +179,58 @@ struct FreeReadingView: View {
                 initialWPM: Int(wpm),
                 title: NSLocalizedString("freereading.title", comment: "")
             )
+        }
+        .sheet(isPresented: $showDocumentPicker) {
+            DocumentPicker { url in
+                loadDocument(from: url)
+            }
+        }
+    }
+    
+    private func loadDocument(from url: URL) {
+        isLoading = true
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            let text = DocumentHelper.extractText(from: url)
+            
+            DispatchQueue.main.async {
+                isLoading = false
+                if let text = text, !text.isEmpty {
+                    inputText = text
+                }
+            }
+        }
+    }
+}
+
+/// Document picker for PDF and DOCX files
+struct DocumentPicker: UIViewControllerRepresentable {
+    let onPick: (URL) -> Void
+    
+    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+        let types: [UTType] = [.pdf, UTType(filenameExtension: "docx")!]
+        let picker = UIDocumentPickerViewController(forOpeningContentTypes: types)
+        picker.delegate = context.coordinator
+        picker.allowsMultipleSelection = false
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(onPick: onPick)
+    }
+    
+    class Coordinator: NSObject, UIDocumentPickerDelegate {
+        let onPick: (URL) -> Void
+        
+        init(onPick: @escaping (URL) -> Void) {
+            self.onPick = onPick
+        }
+        
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            guard let url = urls.first else { return }
+            onPick(url)
         }
     }
 }

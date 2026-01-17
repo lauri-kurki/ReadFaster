@@ -75,6 +75,64 @@ function showFreeReading() {
     showScreen('free-screen');
 }
 
+// File upload handling
+async function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const freeText = document.getElementById('free-text');
+    const ext = file.name.split('.').pop().toLowerCase();
+
+    freeText.value = lang.ui.loading || 'Loading...';
+    freeText.disabled = true;
+
+    try {
+        let text = '';
+
+        if (ext === 'pdf') {
+            text = await extractTextFromPDF(file);
+        } else if (ext === 'docx') {
+            text = await extractTextFromDOCX(file);
+        } else {
+            // Try reading as plain text
+            text = await file.text();
+        }
+
+        freeText.value = text;
+        updateWordCount();
+        updateStartButton();
+    } catch (error) {
+        console.error('Error reading file:', error);
+        freeText.value = '';
+    } finally {
+        freeText.disabled = false;
+        event.target.value = ''; // Reset file input
+    }
+}
+
+async function extractTextFromPDF(file) {
+    const arrayBuffer = await file.arrayBuffer();
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+    let text = '';
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        const pageText = content.items.map(item => item.str).join(' ');
+        text += pageText + '\n\n';
+    }
+
+    return text.trim();
+}
+
+async function extractTextFromDOCX(file) {
+    const arrayBuffer = await file.arrayBuffer();
+    const result = await mammoth.extractRawText({ arrayBuffer });
+    return result.value;
+}
+
 // Training List is loaded via loadTrainingTexts() at end of file
 
 function renderTrainingList() {
@@ -584,12 +642,14 @@ function applyTranslations() {
     // Free Reading screen
     const freeTitle = document.getElementById('free-title');
     const pasteBtn = document.getElementById('paste-btn');
+    const uploadBtn = document.getElementById('upload-btn');
     const speedLabel = document.getElementById('speed-label');
     const startReadingText = document.getElementById('start-reading-text');
     const freeText = document.getElementById('free-text');
 
     if (freeTitle) freeTitle.textContent = ui.freeReading;
     if (pasteBtn) pasteBtn.innerHTML = '📋 ' + ui.paste;
+    if (uploadBtn) uploadBtn.innerHTML = '📄 ' + ui.upload;
     if (speedLabel) speedLabel.textContent = ui.speed || 'Speed';
     if (startReadingText) startReadingText.textContent = ui.startReading;
     if (freeText) freeText.placeholder = ui.placeholder;

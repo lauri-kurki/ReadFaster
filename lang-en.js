@@ -27,6 +27,8 @@ const lang_en = {
         freeReadingTitle: "Free Reading",
         placeholder: "Paste your text here...",
         paste: "Paste",
+        upload: "Upload",
+        loading: "Loading document...",
         startReading: "Start Reading",
         speed: "Speed",
 
