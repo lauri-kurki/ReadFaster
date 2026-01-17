@@ -31,8 +31,8 @@ struct FreeReadingView: View {
                 
                 // Text input area
                 VStack(alignment: .leading, spacing: Theme.paddingSmall) {
-                    // Button row - Paste and Upload
-                    HStack(spacing: 8) {
+                // Button row - Paste and Upload
+                    HStack(spacing: 12) {
                         Spacer()
                         
                         // Paste button
@@ -41,32 +41,30 @@ struct FreeReadingView: View {
                                 inputText = clipboardText
                             }
                         }) {
-                            HStack(spacing: 6) {
-                                Image(systemName: "doc.on.clipboard")
-                                Text(NSLocalizedString("freereading.paste", comment: ""))
-                            }
-                            .font(.system(size: 14, weight: .medium))
-                            .foregroundColor(Theme.accent)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(Theme.accent.opacity(0.15))
-                            .cornerRadius(8)
+                            Text(NSLocalizedString("freereading.paste", comment: ""))
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(Theme.accent)
+                                .padding(.horizontal, 24)
+                                .padding(.vertical, 10)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 25)
+                                        .stroke(Theme.accent, lineWidth: 2)
+                                )
                         }
                         
                         // Upload button
                         Button(action: {
                             showDocumentPicker = true
                         }) {
-                            HStack(spacing: 6) {
-                                Image(systemName: "doc.badge.arrow.up")
-                                Text(NSLocalizedString("freereading.upload", comment: ""))
-                            }
-                            .font(.system(size: 14, weight: .medium))
-                            .foregroundColor(Theme.accent)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .background(Theme.accent.opacity(0.15))
-                            .cornerRadius(8)
+                            Text(NSLocalizedString("freereading.upload", comment: ""))
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(Theme.accent)
+                                .padding(.horizontal, 24)
+                                .padding(.vertical, 10)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 25)
+                                        .stroke(Theme.accent, lineWidth: 2)
+                                )
                         }
                     }
                     
