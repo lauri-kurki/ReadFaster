@@ -28,6 +28,7 @@ const lang_de = {
         placeholder: "Füge deinen Text hier ein...",
         paste: "Einfügen",
         startReading: "Lesen starten",
+        speed: "Geschwindigkeit",
 
         // Reader
         tapToStart: "Tippe zum Starten",

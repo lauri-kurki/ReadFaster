@@ -26,9 +26,13 @@
 
 // Free Reading
 "freereading.title" = "Freies Lesen";
+"freereading.subtitle" = "Füge beliebigen Text ein zum Schnelllesen";
 "freereading.placeholder" = "Füge deinen Text hier ein...";
 "freereading.paste" = "Einfügen";
 "freereading.start" = "Lesen starten";
+"freereading.speed" = "Geschwindigkeit";
+"freereading.words" = "%d Wörter";
+"freereading.done" = "Fertig";
 
 // Reader
 "reader.taptostart" = "Tippe zum Starten";

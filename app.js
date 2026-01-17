@@ -569,18 +569,30 @@ function applyTranslations() {
     // Mode cards - update text content
     const modeCards = document.querySelectorAll('.mode-card');
     if (modeCards.length >= 3) {
-        // Speed Test card
         modeCards[0].querySelector('h3').textContent = ui.speedTest;
         modeCards[0].querySelector('p').textContent = ui.speedTestDesc;
-
-        // Training card
         modeCards[1].querySelector('h3').textContent = ui.training;
         modeCards[1].querySelector('p').textContent = ui.trainingDesc;
-
-        // Free Reading card
         modeCards[2].querySelector('h3').textContent = ui.freeReading;
         modeCards[2].querySelector('p').textContent = ui.freeReadingDesc;
     }
+
+    // Training screen
+    const trainingSubtitle = document.getElementById('training-subtitle');
+    if (trainingSubtitle) trainingSubtitle.textContent = ui.trainingSubtitle;
+
+    // Free Reading screen
+    const freeTitle = document.getElementById('free-title');
+    const pasteBtn = document.getElementById('paste-btn');
+    const speedLabel = document.getElementById('speed-label');
+    const startReadingText = document.getElementById('start-reading-text');
+    const freeText = document.getElementById('free-text');
+
+    if (freeTitle) freeTitle.textContent = ui.freeReading;
+    if (pasteBtn) pasteBtn.innerHTML = '📋 ' + ui.paste;
+    if (speedLabel) speedLabel.textContent = ui.speed || 'Speed';
+    if (startReadingText) startReadingText.textContent = ui.startReading;
+    if (freeText) freeText.placeholder = ui.placeholder;
 
     // Settings screen
     const settingsTitle = document.getElementById('settings-title');

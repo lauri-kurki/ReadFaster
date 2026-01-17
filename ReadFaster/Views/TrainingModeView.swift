@@ -2,6 +2,7 @@ import SwiftUI
 
 /// Training mode view with level selection
 struct TrainingModeView: View {
+    @StateObject private var languageManager = LanguageManager.shared
     @State private var selectedText: TrainingText?
     @State private var completedLevels: Set<Int> = []
     
@@ -14,11 +15,11 @@ struct TrainingModeView: View {
                 VStack(spacing: 24) {
                     // Header
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Training Mode")
+                        Text(NSLocalizedString("training.title", comment: ""))
                             .font(.system(size: 32, weight: .bold, design: .rounded))
                             .foregroundColor(.white)
                         
-                        Text("Complete each level to improve your reading speed")
+                        Text(NSLocalizedString("training.subtitle", comment: ""))
                             .font(.system(size: 16))
                             .foregroundColor(.white.opacity(0.6))
                     }

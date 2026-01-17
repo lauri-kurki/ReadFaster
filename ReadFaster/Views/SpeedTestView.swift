@@ -22,7 +22,7 @@ struct SpeedTestView: View {
                             .clipShape(Circle())
                     }
                     
-                    Text("Speed Test")
+                    Text(NSLocalizedString("speedtest.title", comment: ""))
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(Theme.textPrimary)
                     
@@ -31,7 +31,7 @@ struct SpeedTestView: View {
                 .padding(.horizontal, Theme.paddingMedium)
                 .padding(.top, Theme.paddingSmall)
                 
-                Text("Test your reading comprehension at different speeds")
+                Text(NSLocalizedString("speedtest.subtitle", comment: ""))
                     .font(Theme.bodyFont)
                     .foregroundColor(Theme.textSecondary)
                     .padding(.horizontal, Theme.paddingMedium)
@@ -54,6 +54,10 @@ struct SpeedTestView: View {
             }
         }
         .navigationBarHidden(true)
+        .onAppear {
+            // Reload levels when language might have changed
+            data.loadLevels()
+        }
     }
 }
 
@@ -97,7 +101,7 @@ struct SpeedTestLevelCard: View {
                             .font(.system(size: 12))
                             .foregroundColor(.yellow)
                         
-                        Label("5 questions", systemImage: "questionmark.circle")
+                        Label(NSLocalizedString("speedtest.questions", comment: ""), systemImage: "questionmark.circle")
                             .font(.system(size: 12))
                             .foregroundColor(Theme.textSecondary)
                     }

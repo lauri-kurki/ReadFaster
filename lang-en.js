@@ -28,6 +28,7 @@ const lang_en = {
         placeholder: "Paste your text here...",
         paste: "Paste",
         startReading: "Start Reading",
+        speed: "Speed",
 
         // Reader
         tapToStart: "Tap to start",

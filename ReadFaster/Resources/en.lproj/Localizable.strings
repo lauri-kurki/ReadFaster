@@ -26,9 +26,13 @@
 
 // Free Reading
 "freereading.title" = "Free Reading";
+"freereading.subtitle" = "Paste or type any text to speed read";
 "freereading.placeholder" = "Paste your text here...";
 "freereading.paste" = "Paste";
 "freereading.start" = "Start Reading";
+"freereading.speed" = "Speed";
+"freereading.words" = "%d words";
+"freereading.done" = "Done";
 
 // Reader
 "reader.taptostart" = "Tap to start";
@@ -65,3 +69,4 @@
 
 // General
 "general.back" = "Back";
+

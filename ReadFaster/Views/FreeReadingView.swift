@@ -15,11 +15,11 @@ struct FreeReadingView: View {
             VStack(spacing: 0) {
                 // Header
                 VStack(alignment: .leading, spacing: Theme.paddingSmall) {
-                    Text("Free Reading")
+                    Text(NSLocalizedString("freereading.title", comment: ""))
                         .font(.system(size: 32, weight: .bold, design: .rounded))
                         .foregroundColor(Theme.textPrimary)
                     
-                    Text("Paste or type any text to speed read")
+                    Text(NSLocalizedString("freereading.subtitle", comment: ""))
                         .font(Theme.bodyFont)
                         .foregroundColor(Theme.textSecondary)
                 }
@@ -38,7 +38,7 @@ struct FreeReadingView: View {
                         }) {
                             HStack(spacing: 6) {
                                 Image(systemName: "doc.on.clipboard")
-                                Text("Paste")
+                                Text(NSLocalizedString("freereading.paste", comment: ""))
                             }
                             .font(.system(size: 14, weight: .medium))
                             .foregroundColor(Theme.accent)
@@ -51,7 +51,7 @@ struct FreeReadingView: View {
                     
                     ZStack(alignment: .topLeading) {
                         if inputText.isEmpty {
-                            Text("Paste your text here...")
+                            Text(NSLocalizedString("freereading.placeholder", comment: ""))
                                 .font(Theme.bodyFont)
                                 .foregroundColor(Theme.textSecondary.opacity(0.6))
                                 .padding(.horizontal, 4)
@@ -72,7 +72,7 @@ struct FreeReadingView: View {
                     if !inputText.isEmpty {
                         let wordCount = inputText.components(separatedBy: .whitespacesAndNewlines)
                             .filter { !$0.isEmpty }.count
-                        Text("\(wordCount) words")
+                        Text(String(format: NSLocalizedString("freereading.words", comment: ""), wordCount))
                             .font(.system(size: 13, weight: .medium))
                             .foregroundColor(Theme.textSecondary)
                     }
@@ -83,7 +83,7 @@ struct FreeReadingView: View {
                 // WPM Slider
                 VStack(spacing: Theme.paddingSmall) {
                     HStack {
-                        Text("Speed")
+                        Text(NSLocalizedString("freereading.speed", comment: ""))
                             .font(.system(size: 15, weight: .medium))
                             .foregroundColor(Theme.textSecondary)
                         
@@ -119,7 +119,7 @@ struct FreeReadingView: View {
                 }) {
                     HStack {
                         Image(systemName: "play.fill")
-                        Text("Start Reading")
+                        Text(NSLocalizedString("freereading.start", comment: ""))
                     }
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundColor(inputText.isEmpty ? Theme.textSecondary : Theme.background)
@@ -136,7 +136,7 @@ struct FreeReadingView: View {
         .toolbar {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
-                Button("Done") {
+                Button(NSLocalizedString("freereading.done", comment: "")) {
                     isTextFieldFocused = false
                 }
             }
@@ -145,7 +145,7 @@ struct FreeReadingView: View {
             RSVPReaderView(
                 text: inputText,
                 initialWPM: Int(wpm),
-                title: "Free Reading"
+                title: NSLocalizedString("freereading.title", comment: "")
             )
         }
     }

@@ -70,7 +70,7 @@
         </header>
 
         <div class="training-content">
-            <p class="subtitle">Complete each level to improve your reading speed</p>
+            <p class="subtitle" id="training-subtitle">Complete each level to improve your reading speed</p>
             <div id="training-list" class="training-list">
                 <!-- Populated by JS -->
             </div>
@@ -81,12 +81,12 @@
     <div id="free-screen" class="screen">
         <header class="screen-header">
             <button class="back-btn" onclick="showHome()">‹</button>
-            <h2>Free Reading</h2>
+            <h2 id="free-title">Free Reading</h2>
         </header>
 
         <div class="free-content">
             <div class="paste-row">
-                <button class="paste-btn" onclick="pasteFromClipboard()">📋 Paste</button>
+                <button class="paste-btn" onclick="pasteFromClipboard()" id="paste-btn">📋 Paste</button>
             </div>
 
             <textarea id="free-text" placeholder="Paste your text here..."></textarea>
@@ -95,7 +95,7 @@
 
             <div class="wpm-control">
                 <div class="wpm-header">
-                    <span>Speed</span>
+                    <span id="speed-label">Speed</span>
                     <span class="wpm-value"><span id="wpm-display">300</span> WPM</span>
                 </div>
                 <input type="range" id="wpm-slider" min="100" max="800" value="300" step="25">
@@ -106,7 +106,7 @@
             </div>
 
             <button id="start-free-btn" class="start-btn disabled" onclick="startFreeReading()">
-                ▶ Start Reading
+                ▶ <span id="start-reading-text">Start Reading</span>
             </button>
         </div>
     </div>
