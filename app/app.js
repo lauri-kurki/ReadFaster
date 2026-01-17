@@ -173,6 +173,13 @@ async function extractTextFromEPUB(file, onProgress) {
     const arrayBuffer = await file.arrayBuffer();
     const zip = await JSZip.loadAsync(arrayBuffer);
 
+    // Helper to read file as proper UTF-8 text
+    async function readAsText(zipFile) {
+        const uint8array = await zipFile.async('uint8array');
+        const decoder = new TextDecoder('utf-8');
+        return decoder.decode(uint8array);
+    }
+
     // Find content.opf to get the reading order
     let opfPath = '';
     let opfContent = '';
@@ -180,7 +187,7 @@ async function extractTextFromEPUB(file, onProgress) {
     // Look for container.xml to find the OPF file
     const containerFile = zip.file('META-INF/container.xml');
     if (containerFile) {
-        const containerXml = await containerFile.async('text');
+        const containerXml = await readAsText(containerFile);
         const rootfileMatch = containerXml.match(/full-path="([^"]+\.opf)"/i);
         if (rootfileMatch) {
             opfPath = rootfileMatch[1];
@@ -203,7 +210,7 @@ async function extractTextFromEPUB(file, onProgress) {
 
     const opfFile = zip.file(opfPath);
     if (opfFile) {
-        opfContent = await opfFile.async('text');
+        opfContent = await readAsText(opfFile);
     }
 
     // Extract spine items (reading order) from OPF
@@ -267,7 +274,7 @@ async function extractTextFromEPUB(file, onProgress) {
 
         if (htmlFile) {
             try {
-                const html = await htmlFile.async('text');
+                const html = await readAsText(htmlFile);
                 // Parse HTML and extract text
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
