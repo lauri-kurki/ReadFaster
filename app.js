@@ -83,14 +83,16 @@ async function handleFileUpload(event) {
     const freeText = document.getElementById('free-text');
     const ext = file.name.split('.').pop().toLowerCase();
 
-    freeText.value = lang.ui.loading || 'Loading...';
+    freeText.value = (lang.ui.loading || 'Loading...') + '\n\nFile: ' + file.name;
     freeText.disabled = true;
 
     try {
         let text = '';
 
         if (ext === 'pdf') {
-            text = await extractTextFromPDF(file);
+            text = await extractTextFromPDF(file, (progress) => {
+                freeText.value = (lang.ui.loading || 'Loading...') + '\n\n' + progress;
+            });
         } else if (ext === 'docx') {
             text = await extractTextFromDOCX(file);
         } else {
@@ -98,26 +100,43 @@ async function handleFileUpload(event) {
             text = await file.text();
         }
 
-        freeText.value = text;
-        updateWordCount();
-        updateStartButton();
+        if (text && text.trim().length > 0) {
+            freeText.value = text;
+            updateWordCount();
+            updateStartButton();
+        } else {
+            freeText.value = 'Could not extract text from this file. The PDF may be image-based or protected.';
+        }
     } catch (error) {
         console.error('Error reading file:', error);
-        freeText.value = '';
+        freeText.value = 'Error loading file: ' + error.message;
     } finally {
         freeText.disabled = false;
         event.target.value = ''; // Reset file input
     }
 }
 
-async function extractTextFromPDF(file) {
+async function extractTextFromPDF(file, onProgress) {
+    // Set up PDF.js worker first
+    if (typeof pdfjsLib !== 'undefined') {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    } else {
+        throw new Error('PDF.js library not loaded');
+    }
+
     const arrayBuffer = await file.arrayBuffer();
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-    const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+    const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+    const pdf = await loadingTask.promise;
+
     let text = '';
+    const totalPages = pdf.numPages;
 
-    for (let i = 1; i <= pdf.numPages; i++) {
+    for (let i = 1; i <= totalPages; i++) {
+        if (onProgress) {
+            onProgress(`Page ${i} of ${totalPages}...`);
+        }
+
         const page = await pdf.getPage(i);
         const content = await page.getTextContent();
         const pageText = content.items.map(item => item.str).join(' ');
@@ -128,6 +147,9 @@ async function extractTextFromPDF(file) {
 }
 
 async function extractTextFromDOCX(file) {
+    if (typeof mammoth === 'undefined') {
+        throw new Error('Mammoth.js library not loaded');
+    }
     const arrayBuffer = await file.arrayBuffer();
     const result = await mammoth.extractRawText({ arrayBuffer });
     return result.value;
