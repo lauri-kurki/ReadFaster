@@ -275,6 +275,8 @@ async function extractTextFromEPUB(file, onProgress) {
         if (htmlFile) {
             try {
                 const html = await readAsText(htmlFile);
+                console.log('EPUB DEBUG - File:', itemRefs[i], 'Length:', html.length, 'Sample:', html.substring(0, 200));
+
                 // Parse HTML and extract text
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
@@ -288,6 +290,8 @@ async function extractTextFromEPUB(file, onProgress) {
                     .replace(/\s+/g, ' ')  // Collapse whitespace
                     .trim();
 
+                console.log('EPUB DEBUG - Extracted text sample:', text.substring(0, 200));
+
                 if (text.length > 50) { // Only add if meaningful content
                     fullText += text + '\n\n';
                 }
@@ -297,6 +301,7 @@ async function extractTextFromEPUB(file, onProgress) {
         }
     }
 
+    console.log('EPUB DEBUG - Total extracted length:', fullText.length);
     return fullText.trim() || 'Could not extract text from this EPUB file.';
 }
 
