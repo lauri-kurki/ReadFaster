@@ -130,7 +130,8 @@ async function extractTextFromPDF(file, onProgress) {
     const loadingTask = pdfjsLib.getDocument({
         data: arrayBuffer,
         useWorkerFetch: false,
-        isEvalSupported: false
+        isEvalSupported: false,
+        disableWorker: true
     });
     const pdf = await loadingTask.promise;
 
