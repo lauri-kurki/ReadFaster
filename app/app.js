@@ -166,146 +166,58 @@ async function extractTextFromDOCX(file) {
 }
 
 async function extractTextFromEPUB(file, onProgress) {
-    if (typeof JSZip === 'undefined') {
-        throw new Error('JSZip library not loaded');
+    if (typeof ePub === 'undefined') {
+        throw new Error('ePub.js library not loaded');
     }
 
     const arrayBuffer = await file.arrayBuffer();
-    const zip = await JSZip.loadAsync(arrayBuffer);
+    const book = ePub(arrayBuffer);
 
-    // Helper to read file as proper UTF-8 text
-    async function readAsText(zipFile) {
-        const uint8array = await zipFile.async('uint8array');
-        const decoder = new TextDecoder('utf-8');
-        return decoder.decode(uint8array);
-    }
+    await book.ready;
 
-    // Find content.opf to get the reading order
-    let opfPath = '';
-    let opfContent = '';
-
-    // Look for container.xml to find the OPF file
-    const containerFile = zip.file('META-INF/container.xml');
-    if (containerFile) {
-        const containerXml = await readAsText(containerFile);
-        const rootfileMatch = containerXml.match(/full-path="([^"]+\.opf)"/i);
-        if (rootfileMatch) {
-            opfPath = rootfileMatch[1];
-        }
-    }
-
-    // Fallback: find any .opf file
-    if (!opfPath) {
-        for (const filename of Object.keys(zip.files)) {
-            if (filename.endsWith('.opf')) {
-                opfPath = filename;
-                break;
-            }
-        }
-    }
-
-    if (!opfPath) {
-        throw new Error('Could not find EPUB content file');
-    }
-
-    const opfFile = zip.file(opfPath);
-    if (opfFile) {
-        opfContent = await readAsText(opfFile);
-    }
-
-    // Extract spine items (reading order) from OPF
-    const basePath = opfPath.substring(0, opfPath.lastIndexOf('/') + 1);
-    const itemRefs = [];
-    const idToHref = {};
-
-    // Parse manifest items - handle both id/href order variations
-    const manifestRegex = /<item[^>]*\sid=["']([^"']+)["'][^>]*\shref=["']([^"']+)["'][^>]*>/gi;
-    const manifestRegex2 = /<item[^>]*\shref=["']([^"']+)["'][^>]*\sid=["']([^"']+)["'][^>]*>/gi;
-
-    let match;
-    while ((match = manifestRegex.exec(opfContent)) !== null) {
-        idToHref[match[1]] = decodeURIComponent(match[2]);
-    }
-    while ((match = manifestRegex2.exec(opfContent)) !== null) {
-        idToHref[match[2]] = decodeURIComponent(match[1]);
-    }
-
-    // Parse spine itemrefs
-    const spineRegex = /<itemref[^>]*\sidref=["']([^"']+)["'][^>]*>/gi;
-    while ((match = spineRegex.exec(opfContent)) !== null) {
-        const href = idToHref[match[1]];
-        if (href && (href.endsWith('.html') || href.endsWith('.xhtml') || href.endsWith('.htm'))) {
-            // Handle relative paths
-            let fullPath = href.startsWith('/') ? href.substring(1) : basePath + href;
-            itemRefs.push(fullPath);
-        }
-    }
-
-    // If no spine found, just get all HTML files
-    if (itemRefs.length === 0) {
-        for (const filename of Object.keys(zip.files)) {
-            if ((filename.endsWith('.html') || filename.endsWith('.xhtml') || filename.endsWith('.htm'))
-                && !filename.includes('nav') && !filename.includes('toc')) {
-                itemRefs.push(filename);
-            }
-        }
-        itemRefs.sort();
-    }
-
-    // Extract text from each chapter
+    // Get the spine (reading order)
+    const spine = book.spine;
     let fullText = '';
-    for (let i = 0; i < itemRefs.length; i++) {
+    let index = 0;
+    const total = spine.length;
+
+    // Iterate through all spine items
+    for (const item of spine.items) {
+        index++;
         if (onProgress) {
-            onProgress(`Chapter ${i + 1} of ${itemRefs.length}...`);
+            onProgress(`Chapter ${index} of ${total}...`);
         }
 
-        // Try to find the file (handle path variations)
-        let htmlFile = zip.file(itemRefs[i]);
-        if (!htmlFile) {
-            // Try without base path
-            const filename = itemRefs[i].split('/').pop();
-            for (const key of Object.keys(zip.files)) {
-                if (key.endsWith(filename)) {
-                    htmlFile = zip.file(key);
-                    break;
-                }
-            }
-        }
+        try {
+            // Load the document for this spine item
+            const doc = await book.load(item.href);
 
-        if (htmlFile) {
-            try {
-                const html = await readAsText(htmlFile);
-                console.log('EPUB DEBUG - File:', itemRefs[i], 'Length:', html.length, 'Sample:', html.substring(0, 200));
+            if (doc && doc.body) {
+                // Remove non-content elements
+                const elementsToRemove = doc.querySelectorAll('script, style, nav, aside, header, footer');
+                elementsToRemove.forEach(el => el.remove());
 
-                // Parse HTML and extract text
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                // Remove scripts and styles
-                doc.querySelectorAll('script, style, nav, head').forEach(el => el.remove());
-                let text = doc.body ? doc.body.textContent : '';
+                // Get text content
+                let text = doc.body.textContent || '';
+                text = text.replace(/\s+/g, ' ').trim();
 
-                // Clean up the text
-                text = text
-                    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F-\x9F]/g, '') // Remove control characters
-                    .replace(/\s+/g, ' ')  // Collapse whitespace
-                    .trim();
-
-                console.log('EPUB DEBUG - Extracted text sample:', text.substring(0, 200));
-
-                if (text.length > 50) { // Only add if meaningful content
+                if (text.length > 20) {
                     fullText += text + '\n\n';
                 }
-            } catch (e) {
-                console.warn('Error parsing chapter:', e);
             }
+        } catch (e) {
+            console.warn('Error loading chapter:', item.href, e);
         }
     }
 
-    console.log('EPUB DEBUG - Total extracted length:', fullText.length);
+    book.destroy();
+
     return fullText.trim() || 'Could not extract text from this EPUB file.';
 }
 
 // Training List is loaded via loadTrainingTexts() at end of file
+
+
 
 function renderTrainingList() {
     const list = document.getElementById('training-list');
