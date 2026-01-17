@@ -117,16 +117,21 @@ async function handleFileUpload(event) {
 }
 
 async function extractTextFromPDF(file, onProgress) {
-    // Set up PDF.js worker first
-    if (typeof pdfjsLib !== 'undefined') {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    } else {
+    // Check if PDF.js is loaded
+    if (typeof pdfjsLib === 'undefined') {
         throw new Error('PDF.js library not loaded');
     }
 
+    // Disable worker to avoid cross-origin issues (works more reliably)
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '';
+
     const arrayBuffer = await file.arrayBuffer();
 
-    const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+    const loadingTask = pdfjsLib.getDocument({
+        data: arrayBuffer,
+        useWorkerFetch: false,
+        isEvalSupported: false
+    });
     const pdf = await loadingTask.promise;
 
     let text = '';
