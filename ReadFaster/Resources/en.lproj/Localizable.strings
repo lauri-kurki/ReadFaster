@@ -1,0 +1,67 @@
+/* 
+  Localizable.strings (English)
+  ReadFaster
+*/
+
+// Home Screen
+"app.name" = "ReadFaster";
+"app.tagline" = "Train your speed reading skills";
+
+// Mode Cards
+"mode.speedtest" = "Speed Test";
+"mode.speedtest.description" = "Test your comprehension at speed";
+"mode.training" = "Training Mode";
+"mode.training.description" = "Progressive lessons to build your speed";
+"mode.freereading" = "Free Reading";
+"mode.freereading.description" = "Read any text at your chosen speed";
+
+// Speed Test
+"speedtest.title" = "Speed Test";
+"speedtest.subtitle" = "Test your reading comprehension at different speeds";
+"speedtest.questions" = "5 questions";
+
+// Training Mode
+"training.title" = "Training Mode";
+"training.subtitle" = "Complete each level to improve your reading speed";
+
+// Free Reading
+"freereading.title" = "Free Reading";
+"freereading.placeholder" = "Paste your text here...";
+"freereading.paste" = "Paste";
+"freereading.start" = "Start Reading";
+
+// Reader
+"reader.taptostart" = "Tap to start";
+
+// Quiz
+"quiz.question" = "Question %d of 5";
+
+// Results
+"result.perfect.title" = "Perfect!";
+"result.perfect.subtitle" = "You're a Speed Reading Champion!";
+"result.excellent.title" = "Excellent!";
+"result.excellent.subtitle" = "You're a Speedy Reader!";
+"result.good.title" = "Good Job!";
+"result.good.subtitle" = "You passed the test!";
+"result.almost.title" = "Almost There!";
+"result.almost.subtitle" = "Keep practicing to improve!";
+"result.retry.title" = "Keep Trying!";
+"result.retry.subtitle" = "Practice makes perfect!";
+"result.score" = "%d/5 correct";
+"result.nextlevel" = "Next Level";
+"result.tryagain" = "Try Again";
+"result.backtomenu" = "Back to Menu";
+
+// Complete Screen
+"complete.title" = "Complete!";
+"complete.stats" = "%d words at %d WPM";
+"complete.done" = "Done";
+
+// Settings
+"settings.title" = "Settings";
+"settings.language" = "Language";
+"settings.language.english" = "English";
+"settings.language.german" = "Deutsch";
+
+// General
+"general.back" = "Back";

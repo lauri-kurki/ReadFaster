@@ -16,6 +16,10 @@ let currentSpeedTestLevel = null;
 let quizAnswers = [];
 let currentQuestionIndex = 0;
 
+// Language state
+let currentLanguage = localStorage.getItem('appLanguage') || (navigator.language.startsWith('de') ? 'de' : 'en');
+let lang = currentLanguage === 'de' ? lang_de : lang_en;
+
 // ORP Calculation - matches iOS app
 function calculateORP(word) {
     const len = word.length;
@@ -71,33 +75,24 @@ function showFreeReading() {
     showScreen('free-screen');
 }
 
-// Training List
-async function loadTrainingTexts() {
-    try {
-        const response = await fetch('training-texts.json');
-        const data = await response.json();
-        trainingTexts = data.texts;
-        renderTrainingList();
-    } catch (e) {
-        console.error('Failed to load training texts:', e);
-    }
-}
+// Training List is loaded via loadTrainingTexts() at end of file
 
 function renderTrainingList() {
     const list = document.getElementById('training-list');
+    if (!list) return;
     list.innerHTML = trainingTexts.map(t => {
         const isCompleted = completedLevels.has(t.id);
         const wordCount = t.content.split(/\s+/).length;
-        const minutes = Math.ceil(wordCount / t.targetWPM);
+        const minutes = Math.ceil(wordCount / t.wpm);
 
         return `
-            <button class="training-card" onclick="startTraining(${t.id})">
+            <button class="training-card" onclick="startTraining('${t.id}')">
                 <div class="level-badge ${isCompleted ? 'completed' : ''}">${isCompleted ? '✓' : t.level}</div>
                 <div class="training-info">
                     <h4>${t.title}</h4>
                     <div class="author">${t.author}</div>
                     <div class="training-meta">
-                        <span>⚡ ${t.targetWPM} wpm</span>
+                        <span>⚡ ${t.wpm} wpm</span>
                         <span>⏱ ${minutes} min</span>
                     </div>
                 </div>
@@ -112,9 +107,10 @@ function startTraining(id) {
     if (!text) return;
 
     currentWords = parseText(text.content);
-    currentWPM = text.targetWPM;
+    currentWPM = text.wpm;
     currentIndex = 0;
     currentTitle = text.title;
+    window.currentTrainingId = id;
 
     startReader(text.id);
 }
@@ -363,68 +359,10 @@ function showComplete() {
 // Initialize
 loadTrainingTexts();
 loadSpeedTestData();
+applyTranslations();
+updateLanguageButtons();
 
 // ============ SPEED TEST FUNCTIONS ============
-
-function loadSpeedTestData() {
-    speedTestLevels = [
-        {
-            id: "test-1", level: 1, title: "The Coffee Bean", wpm: 200,
-            text: "Coffee is one of the most popular beverages in the world. It originated in Ethiopia, where legend says a goat herder named Kaldi discovered it after noticing his goats became energetic after eating certain berries. The beans are actually seeds from the coffee cherry fruit. Today, Brazil is the world's largest coffee producer, followed by Vietnam and Colombia. Coffee contains caffeine, which stimulates the central nervous system and can improve focus and alertness. Most people drink coffee in the morning to help wake up, though some prefer it throughout the day. The two main types of coffee beans are Arabica and Robusta. Arabica beans are considered higher quality and have a smoother taste, while Robusta beans are stronger and contain more caffeine.",
-            questions: [
-                { question: "Where did coffee originate?", options: ["Brazil", "Ethiopia", "Vietnam", "Colombia"], correctIndex: 1 },
-                { question: "Who discovered coffee according to legend?", options: ["A farmer", "A scientist", "A goat herder named Kaldi", "A merchant"], correctIndex: 2 },
-                { question: "What is the world's largest coffee producer?", options: ["Colombia", "Vietnam", "Ethiopia", "Brazil"], correctIndex: 3 },
-                { question: "What does caffeine stimulate?", options: ["The digestive system", "The central nervous system", "The immune system", "The respiratory system"], correctIndex: 1 },
-                { question: "Which coffee bean type is considered higher quality?", options: ["Robusta", "Liberica", "Arabica", "Excelsa"], correctIndex: 2 }
-            ]
-        },
-        {
-            id: "test-2", level: 2, title: "The Human Brain", wpm: 300,
-            text: "The human brain is the most complex organ in the body, weighing about three pounds and containing approximately 86 billion neurons. These neurons communicate through electrical and chemical signals, forming trillions of connections called synapses. The brain is divided into different regions, each responsible for specific functions. The frontal lobe handles decision-making, problem-solving, and personality. The temporal lobe processes hearing and language comprehension. The parietal lobe manages sensory information and spatial awareness. The occipital lobe is dedicated to visual processing. The brain consumes about 20 percent of the body's energy, despite being only 2 percent of body weight.",
-            questions: [
-                { question: "How many neurons does the human brain contain?", options: ["10 million", "1 billion", "86 billion", "100 trillion"], correctIndex: 2 },
-                { question: "Which lobe handles decision-making?", options: ["Temporal lobe", "Frontal lobe", "Parietal lobe", "Occipital lobe"], correctIndex: 1 },
-                { question: "What percentage of body energy does the brain consume?", options: ["5 percent", "10 percent", "15 percent", "20 percent"], correctIndex: 3 },
-                { question: "Which lobe processes visual information?", options: ["Frontal lobe", "Temporal lobe", "Parietal lobe", "Occipital lobe"], correctIndex: 3 },
-                { question: "What are connections between neurons called?", options: ["Axons", "Dendrites", "Synapses", "Myelin"], correctIndex: 2 }
-            ]
-        },
-        {
-            id: "test-3", level: 3, title: "The Solar System", wpm: 400,
-            text: "Our solar system formed approximately 4.6 billion years ago from a giant cloud of gas and dust called a nebula. At its center sits the Sun, a medium-sized star that contains 99.86 percent of the solar system's total mass. Eight planets orbit the Sun, divided into two categories: the inner rocky planets and the outer gas giants. Mercury, Venus, Earth, and Mars are the terrestrial planets, composed primarily of rock and metal. Jupiter, Saturn, Uranus, and Neptune are the gas giants, with Jupiter being the largest planet in our solar system. Beyond Neptune lies the Kuiper Belt, home to dwarf planets like Pluto.",
-            questions: [
-                { question: "How old is our solar system?", options: ["1 billion years", "2.5 billion years", "4.6 billion years", "10 billion years"], correctIndex: 2 },
-                { question: "What percentage of the solar system's mass is in the Sun?", options: ["75 percent", "85 percent", "95 percent", "99.86 percent"], correctIndex: 3 },
-                { question: "Which is the largest planet?", options: ["Saturn", "Neptune", "Jupiter", "Uranus"], correctIndex: 2 },
-                { question: "Where is the Kuiper Belt located?", options: ["Between Earth and Mars", "Between Mars and Jupiter", "Beyond Neptune", "Near Mercury"], correctIndex: 2 },
-                { question: "How many planets orbit the Sun?", options: ["7", "8", "9", "10"], correctIndex: 1 }
-            ]
-        },
-        {
-            id: "test-4", level: 4, title: "The Renaissance", wpm: 500,
-            text: "The Renaissance, meaning 'rebirth' in French, was a transformative cultural movement that began in Italy during the 14th century and spread across Europe over the next three centuries. This period marked a transition from medieval times to modernity, characterized by renewed interest in classical Greek and Roman culture, art, philosophy, and science. Florence, Italy, served as the movement's birthplace, largely due to the patronage of wealthy families like the Medici. Artists such as Leonardo da Vinci, Michelangelo, and Raphael created masterpieces that revolutionized visual arts. The printing press, invented by Johannes Gutenberg around 1440, democratized knowledge by making books accessible.",
-            questions: [
-                { question: "What does 'Renaissance' mean?", options: ["Revolution", "Rebirth", "Reform", "Recovery"], correctIndex: 1 },
-                { question: "Which city was the birthplace of the Renaissance?", options: ["Rome", "Venice", "Florence", "Milan"], correctIndex: 2 },
-                { question: "Which family was a major patron of Renaissance arts?", options: ["Borgia", "Medici", "Sforza", "Este"], correctIndex: 1 },
-                { question: "Who invented the printing press?", options: ["Leonardo da Vinci", "Galileo", "Johannes Gutenberg", "Copernicus"], correctIndex: 2 },
-                { question: "When did the Renaissance begin?", options: ["12th century", "14th century", "16th century", "18th century"], correctIndex: 1 }
-            ]
-        },
-        {
-            id: "test-5", level: 5, title: "Quantum Physics", wpm: 600,
-            text: "Quantum physics describes the behavior of matter and energy at the smallest scales, where classical physics breaks down. Max Planck initiated the quantum revolution in 1900 when he proposed that energy is emitted in discrete packets called quanta. Albert Einstein extended this idea, explaining the photoelectric effect by proposing that light consists of particles called photons. Werner Heisenberg formulated the uncertainty principle, which states that we cannot simultaneously know both the exact position and momentum of a particle. Erwin Schrödinger's famous thought experiment involving a cat illustrated the concept of superposition.",
-            questions: [
-                { question: "Who proposed that energy is emitted in discrete packets?", options: ["Einstein", "Max Planck", "Heisenberg", "Schrödinger"], correctIndex: 1 },
-                { question: "What are discrete packets of energy called?", options: ["Photons", "Electrons", "Quanta", "Atoms"], correctIndex: 2 },
-                { question: "What does the uncertainty principle relate to?", options: ["Energy and time", "Position and momentum", "Mass and velocity", "Charge and spin"], correctIndex: 1 },
-                { question: "What concept does Schrödinger's cat illustrate?", options: ["Entanglement", "Uncertainty", "Superposition", "Wave-particle duality"], correctIndex: 2 },
-                { question: "When did Planck propose his quantum theory?", options: ["1850", "1900", "1925", "1950"], correctIndex: 1 }
-            ]
-        }
-    ];
-}
 
 function showSpeedTest() {
     renderSpeedTestLevels();
@@ -587,4 +525,84 @@ function nextSpeedTestLevel() {
 
 function retrySpeedTest() {
     startSpeedTest(currentSpeedTestLevel.id);
+}
+
+// ============ LANGUAGE FUNCTIONS ============
+
+function showSettings() {
+    showScreen('settings-screen');
+}
+
+function setLanguage(langCode) {
+    if (langCode === currentLanguage) return;
+
+    currentLanguage = langCode;
+    localStorage.setItem('appLanguage', langCode);
+    lang = langCode === 'de' ? lang_de : lang_en;
+
+    // Reload data with new language
+    loadTrainingTexts();
+    loadSpeedTestData();
+    applyTranslations();
+    updateLanguageButtons();
+}
+
+function updateLanguageButtons() {
+    const enBtn = document.getElementById('lang-en');
+    const deBtn = document.getElementById('lang-de');
+
+    if (enBtn && deBtn) {
+        enBtn.classList.toggle('active', currentLanguage === 'en');
+        deBtn.classList.toggle('active', currentLanguage === 'de');
+    }
+}
+
+function applyTranslations() {
+    const ui = lang.ui;
+
+    // Home screen
+    const homeTitle = document.getElementById('home-title');
+    const homeTagline = document.getElementById('home-tagline');
+    if (homeTitle) homeTitle.textContent = ui.appName;
+    if (homeTagline) homeTagline.textContent = ui.tagline;
+
+    // Mode cards - update text content
+    const modeCards = document.querySelectorAll('.mode-card');
+    if (modeCards.length >= 3) {
+        // Speed Test card
+        modeCards[0].querySelector('h3').textContent = ui.speedTest;
+        modeCards[0].querySelector('p').textContent = ui.speedTestDesc;
+
+        // Training card
+        modeCards[1].querySelector('h3').textContent = ui.training;
+        modeCards[1].querySelector('p').textContent = ui.trainingDesc;
+
+        // Free Reading card
+        modeCards[2].querySelector('h3').textContent = ui.freeReading;
+        modeCards[2].querySelector('p').textContent = ui.freeReadingDesc;
+    }
+
+    // Settings screen
+    const settingsTitle = document.getElementById('settings-title');
+    const settingsLangLabel = document.getElementById('settings-lang-label');
+    if (settingsTitle) settingsTitle.textContent = ui.settings;
+    if (settingsLangLabel) settingsLangLabel.textContent = ui.language;
+}
+
+// Update loadTrainingTexts to use language data
+function loadTrainingTexts() {
+    trainingTexts = lang.training.map(t => ({
+        id: t.id,
+        title: t.title,
+        author: t.author,
+        level: t.level,
+        wpm: t.wpm,
+        content: t.content
+    }));
+    renderTrainingList();
+}
+
+// Update loadSpeedTestData to use language data
+function loadSpeedTestData() {
+    speedTestLevels = lang.speedTest;
 }

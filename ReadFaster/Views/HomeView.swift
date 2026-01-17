@@ -2,28 +2,44 @@ import SwiftUI
 
 /// Main home screen with mode selection
 struct HomeView: View {
+    @State private var showSettings = false
+    
     var body: some View {
         ZStack {
             Theme.background
                 .ignoresSafeArea()
             
             VStack(spacing: Theme.paddingXLarge) {
+                // Settings button
+                HStack {
+                    Spacer()
+                    NavigationLink(destination: SettingsView()) {
+                        Image(systemName: "gearshape.fill")
+                            .font(.system(size: 20))
+                            .foregroundColor(Theme.textSecondary)
+                            .frame(width: 40, height: 40)
+                            .background(Theme.surface)
+                            .clipShape(Circle())
+                    }
+                }
+                .padding(.horizontal, Theme.paddingMedium)
+                .padding(.top, Theme.paddingSmall)
+                
                 Spacer()
                 
                 // Logo and title
                 VStack(spacing: Theme.paddingMedium) {
-                    // App icon - use new logo image
                     Image("Logo")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 80, height: 80)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                     
-                    Text("ReadFaster")
+                    Text(NSLocalizedString("app.name", comment: ""))
                         .font(.system(size: 36, weight: .bold, design: .rounded))
                         .foregroundColor(Theme.textPrimary)
                     
-                    Text("Train your speed reading skills")
+                    Text(NSLocalizedString("app.tagline", comment: ""))
                         .font(Theme.bodyFont)
                         .foregroundColor(Theme.textSecondary)
                 }
@@ -32,12 +48,11 @@ struct HomeView: View {
                 
                 // Mode selection cards
                 VStack(spacing: Theme.paddingMedium) {
-                    // Speed Test - first option
                     NavigationLink(destination: SpeedTestView()) {
                         ModeCard(
                             icon: "stopwatch.fill",
-                            title: "Speed Test",
-                            description: "Test your comprehension at speed",
+                            title: NSLocalizedString("mode.speedtest", comment: ""),
+                            description: NSLocalizedString("mode.speedtest.description", comment: ""),
                             color: .purple
                         )
                     }
@@ -45,8 +60,8 @@ struct HomeView: View {
                     NavigationLink(destination: TrainingModeView()) {
                         ModeCard(
                             icon: "graduationcap.fill",
-                            title: "Training Mode",
-                            description: "Progressive lessons to build your speed",
+                            title: NSLocalizedString("mode.training", comment: ""),
+                            description: NSLocalizedString("mode.training.description", comment: ""),
                             color: Theme.accent
                         )
                     }
@@ -54,8 +69,8 @@ struct HomeView: View {
                     NavigationLink(destination: FreeReadingView()) {
                         ModeCard(
                             icon: "doc.text.fill",
-                            title: "Free Reading",
-                            description: "Read any text at your chosen speed",
+                            title: NSLocalizedString("mode.freereading", comment: ""),
+                            description: NSLocalizedString("mode.freereading.description", comment: ""),
                             color: Theme.success
                         )
                     }

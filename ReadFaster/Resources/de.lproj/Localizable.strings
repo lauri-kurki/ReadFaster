@@ -1,0 +1,67 @@
+/* 
+  Localizable.strings (German)
+  ReadFaster
+*/
+
+// Home Screen
+"app.name" = "ReadFaster";
+"app.tagline" = "Trainiere deine Lesegeschwindigkeit";
+
+// Mode Cards
+"mode.speedtest" = "Lesetest";
+"mode.speedtest.description" = "Teste dein Leseverständnis";
+"mode.training" = "Trainingsmodus";
+"mode.training.description" = "Steigere schrittweise deine Geschwindigkeit";
+"mode.freereading" = "Freies Lesen";
+"mode.freereading.description" = "Lies jeden Text in deinem Tempo";
+
+// Speed Test
+"speedtest.title" = "Lesetest";
+"speedtest.subtitle" = "Teste dein Leseverständnis bei verschiedenen Geschwindigkeiten";
+"speedtest.questions" = "5 Fragen";
+
+// Training Mode
+"training.title" = "Trainingsmodus";
+"training.subtitle" = "Schließe jedes Level ab, um schneller zu werden";
+
+// Free Reading
+"freereading.title" = "Freies Lesen";
+"freereading.placeholder" = "Füge deinen Text hier ein...";
+"freereading.paste" = "Einfügen";
+"freereading.start" = "Lesen starten";
+
+// Reader
+"reader.taptostart" = "Tippe zum Starten";
+
+// Quiz
+"quiz.question" = "Frage %d von 5";
+
+// Results
+"result.perfect.title" = "Perfekt!";
+"result.perfect.subtitle" = "Du bist ein Schnelllese-Champion!";
+"result.excellent.title" = "Ausgezeichnet!";
+"result.excellent.subtitle" = "Du bist ein schneller Leser!";
+"result.good.title" = "Gut gemacht!";
+"result.good.subtitle" = "Du hast den Test bestanden!";
+"result.almost.title" = "Fast geschafft!";
+"result.almost.subtitle" = "Übe weiter, um dich zu verbessern!";
+"result.retry.title" = "Weiter üben!";
+"result.retry.subtitle" = "Übung macht den Meister!";
+"result.score" = "%d/5 richtig";
+"result.nextlevel" = "Nächstes Level";
+"result.tryagain" = "Nochmal versuchen";
+"result.backtomenu" = "Zurück zum Menü";
+
+// Complete Screen
+"complete.title" = "Fertig!";
+"complete.stats" = "%d Wörter bei %d WPM";
+"complete.done" = "Fertig";
+
+// Settings
+"settings.title" = "Einstellungen";
+"settings.language" = "Sprache";
+"settings.language.english" = "English";
+"settings.language.german" = "Deutsch";
+
+// General
+"general.back" = "Zurück";

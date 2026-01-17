@@ -20,10 +20,15 @@
     <!-- Home Screen -->
     <div id="home-screen" class="screen active">
         <div class="home-content">
+            <!-- Settings button -->
+            <div class="settings-btn-container">
+                <button class="settings-btn" onclick="showSettings()">⚙️</button>
+            </div>
+
             <div class="logo">
                 <img src="icon-192.png" alt="ReadFaster" class="logo-image">
-                <h1>ReadFaster</h1>
-                <p class="tagline">Train your speed reading skills</p>
+                <h1 id="home-title">ReadFaster</h1>
+                <p class="tagline" id="home-tagline">Train your speed reading skills</p>
             </div>
 
             <div class="mode-cards">
@@ -201,6 +206,27 @@
         </div>
     </div>
 
+    <!-- Settings Screen -->
+    <div id="settings-screen" class="screen">
+        <div class="screen-content">
+            <header class="screen-header">
+                <button class="back-btn" onclick="showHome()">‹</button>
+                <h2 id="settings-title">Settings</h2>
+            </header>
+            <div class="settings-list">
+                <div class="settings-section">
+                    <p class="settings-label" id="settings-lang-label">Language</p>
+                    <div class="settings-options">
+                        <button class="lang-option" id="lang-en" onclick="setLanguage('en')">English</button>
+                        <button class="lang-option" id="lang-de" onclick="setLanguage('de')">Deutsch</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="lang-en.js"></script>
+    <script src="lang-de.js"></script>
     <script src="app.js"></script>
 </body>
 
