@@ -27,6 +27,81 @@ body {
     overflow: hidden;
 }
 
+/* Fixed App Header (Desktop Only) */
+.app-header {
+    display: none;
+    /* Hidden on mobile by default */
+}
+
+@media (min-width: 768px) {
+    .app-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 24px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .app-header-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--text-primary);
+    }
+
+    .app-header-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+    }
+
+    .app-header-text {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .app-header-settings {
+        background: transparent;
+        border: none;
+        font-size: 22px;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 50%;
+        transition: background 0.2s;
+    }
+
+    .app-header-settings:hover {
+        background: var(--bg-surface);
+    }
+
+    /* Adjust screens to account for fixed header */
+    .screen {
+        padding-top: 80px;
+    }
+
+    .screen-header {
+        padding-top: 0;
+    }
+
+    /* Hide individual screen header logos/settings on desktop (fixed header has them) */
+    .header-logo-link,
+    .settings-btn-small {
+        display: none;
+    }
+
+    /* Also hide home screen settings button container */
+    .settings-btn-container {
+        display: none;
+    }
+}
+
 /* Screens */
 .screen {
     display: none;
