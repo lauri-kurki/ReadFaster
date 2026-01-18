@@ -24,12 +24,15 @@
 
 <body>
     <!-- Fixed Header (Desktop Only) -->
-    <header class="app-header">
-        <a href="/" class="app-header-logo">
-            <img src="../icon-192.png" alt="ReadFaster" class="app-header-icon">
-            <span class="app-header-text">ReadFaster</span>
+    <header class="app-header" style="display: none;">
+        <a href="/" class="app-header-logo"
+            style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #F5F5F5;">
+            <img src="../icon-192.png" alt="ReadFaster" class="app-header-icon"
+                style="width: 36px; height: 36px; border-radius: 10px;">
+            <span class="app-header-text" style="font-size: 20px; font-weight: 700;">ReadFaster</span>
         </a>
-        <button class="app-header-settings" onclick="showSettings()">⚙️</button>
+        <button class="app-header-settings" onclick="showSettings()"
+            style="background: transparent; border: none; font-size: 22px; cursor: pointer; padding: 8px;">⚙️</button>
     </header>
 
     <!-- Home Screen -->
