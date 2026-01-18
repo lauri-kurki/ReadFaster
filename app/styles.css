@@ -33,6 +33,42 @@ body {
     /* Hidden on mobile by default */
 }
 
+/* Base styles for header elements (always apply) */
+.app-header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.app-header-icon {
+    width: 36px !important;
+    height: 36px !important;
+    max-width: 36px;
+    max-height: 36px;
+    border-radius: 10px;
+}
+
+.app-header-text {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.app-header-settings {
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.app-header-settings:hover {
+    background: var(--bg-surface);
+}
+
 @media (min-width: 768px) {
     .app-header {
         display: flex;
@@ -46,39 +82,6 @@ body {
         background: var(--bg-primary);
         z-index: 1000;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .app-header-logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        color: var(--text-primary);
-    }
-
-    .app-header-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-    }
-
-    .app-header-text {
-        font-size: 20px;
-        font-weight: 700;
-    }
-
-    .app-header-settings {
-        background: transparent;
-        border: none;
-        font-size: 22px;
-        cursor: pointer;
-        padding: 8px;
-        border-radius: 50%;
-        transition: background 0.2s;
-    }
-
-    .app-header-settings:hover {
-        background: var(--bg-surface);
     }
 
     /* Adjust screens to account for fixed header */
