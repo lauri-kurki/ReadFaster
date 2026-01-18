@@ -69,7 +69,7 @@ body {
 
     /* Adjust screens to account for fixed header */
     .screen {
-        padding-top: 80px;
+        padding-top: 100px;
     }
 
     .screen-header {
