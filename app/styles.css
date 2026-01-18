@@ -191,6 +191,39 @@ body {
     /* Visual adjustment for chevron */
 }
 
+/* Header Logo Link */
+.header-logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.header-logo-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+}
+
+/* Settings Button (small for headers) */
+.settings-btn-small {
+    margin-left: auto;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.settings-btn-small:hover {
+    background: var(--bg-surface);
+}
+
 .subtitle {
     color: var(--text-secondary);
     margin-bottom: 24px;
