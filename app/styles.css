@@ -30,49 +30,13 @@ body {
 /* Fixed App Header (Desktop Only) */
 .app-header {
     display: none;
-    /* Hidden on mobile by default */
+    /* Hidden on mobile */
 }
 
-/* Base styles for header elements (always apply) */
-.app-header-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: var(--text-primary);
-}
-
-.app-header-icon {
-    width: 36px !important;
-    height: 36px !important;
-    max-width: 36px;
-    max-height: 36px;
-    border-radius: 10px;
-}
-
-.app-header-text {
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.app-header-settings {
-    background: transparent;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    transition: background 0.2s;
-}
-
-.app-header-settings:hover {
-    background: var(--bg-surface);
-}
-
+/* Desktop only - show fixed header */
 @media (min-width: 768px) {
     .app-header {
-        display: flex !important;
-        justify-content: space-between;
+        display: flex;
         align-items: center;
         padding: 16px 24px;
         position: fixed;
@@ -84,6 +48,25 @@ body {
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
+    .app-header-logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: var(--text-primary);
+    }
+
+    .app-header-logo img {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+    }
+
+    .app-header-logo span {
+        font-size: 22px;
+        font-weight: 700;
+    }
+
     /* Adjust screens to account for fixed header */
     .screen {
         padding-top: 80px;
@@ -93,13 +76,7 @@ body {
         padding-top: 0;
     }
 
-    /* Hide individual screen header logos/settings on desktop (fixed header has them) */
-    .header-logo-link,
-    .settings-btn-small {
-        display: none;
-    }
-
-    /* Also hide home screen settings button container */
+    /* Hide home screen settings and logo on desktop (header handles navigation) */
     .settings-btn-container {
         display: none;
     }

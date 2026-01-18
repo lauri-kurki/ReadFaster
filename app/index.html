@@ -24,15 +24,11 @@
 
 <body>
     <!-- Fixed Header (Desktop Only) -->
-    <header class="app-header" style="display: none;">
-        <a href="/" class="app-header-logo"
-            style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #F5F5F5;">
-            <img src="../icon-192.png" alt="ReadFaster" class="app-header-icon"
-                style="width: 36px; height: 36px; border-radius: 10px;">
-            <span class="app-header-text" style="font-size: 20px; font-weight: 700;">ReadFaster</span>
+    <header class="app-header">
+        <a href="/" class="app-header-logo">
+            <img src="../icon-192.png" alt="ReadFaster">
+            <span>ReadFaster</span>
         </a>
-        <button class="app-header-settings" onclick="showSettings()"
-            style="background: transparent; border: none; font-size: 22px; cursor: pointer; padding: 8px;">⚙️</button>
     </header>
 
     <!-- Home Screen -->
@@ -83,11 +79,8 @@
     <!-- Training Mode Screen -->
     <div id="training-screen" class="screen">
         <header class="screen-header">
-            <a href="/" class="header-logo-link"><img src="../icon-192.png" alt="ReadFaster"
-                    class="header-logo-small"></a>
             <button class="back-btn" onclick="showHome()">‹</button>
             <h2>Training Mode</h2>
-            <button class="settings-btn-small" onclick="showSettings()">⚙️</button>
         </header>
 
         <div class="training-content">
@@ -101,11 +94,8 @@
     <!-- Free Reading Screen -->
     <div id="free-screen" class="screen">
         <header class="screen-header">
-            <a href="/" class="header-logo-link"><img src="../icon-192.png" alt="ReadFaster"
-                    class="header-logo-small"></a>
             <button class="back-btn" onclick="showHome()">‹</button>
             <h2 id="free-title">Free Reading</h2>
-            <button class="settings-btn-small" onclick="showSettings()">⚙️</button>
         </header>
 
         <div class="free-content">
@@ -205,11 +195,8 @@
     <div id="speedtest-screen" class="screen">
         <div class="screen-content">
             <header class="screen-header">
-                <a href="/" class="header-logo-link"><img src="../icon-192.png" alt="ReadFaster"
-                        class="header-logo-small"></a>
                 <button class="back-btn" onclick="showHome()">‹</button>
                 <h2>Speed Test</h2>
-                <button class="settings-btn-small" onclick="showSettings()">⚙️</button>
             </header>
             <p class="subtitle">Test your reading comprehension at different speeds</p>
             <div id="speedtest-list" class="training-list"></div>
@@ -243,8 +230,6 @@
     <div id="settings-screen" class="screen">
         <div class="screen-content">
             <header class="screen-header">
-                <a href="/" class="header-logo-link"><img src="../icon-192.png" alt="ReadFaster"
-                        class="header-logo-small"></a>
                 <button class="back-btn" onclick="showHome()">‹</button>
                 <h2 id="settings-title">Settings</h2>
             </header>
